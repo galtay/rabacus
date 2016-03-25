@@ -1,0 +1,5 @@
+include COPYING.txt
+include rabacus/f2py/*.f90
+include rabacus/atomic/nist/ion_enrg.dat
+include rabacus/atomic/verner/photox/photo.dat
+include rabacus/uv_bgnd/hm12_dat/*.out

@@ -1,0 +1,42 @@
+title iliev test 2 
+c
+abundances all -15.0
+element off limit -7
+atom H-like levels very small
+atom He-like levels very small
+hden -3
+sphere static
+radius 1 parsec
+stop radius 6600 parsec linear
+blackbody 1.0e5 K
+Q(H) 48.69897
+iterate 2 times
+c
+no advection
+no Auger effect
+no charge transfer
+no Compton effect
+no CTHeat
+no FeII pumping
+no fine structure line optical depths
+no fine structure
+no fine opacities
+no free free
+no grain physics
+no induced processes
+no line transfer
+no Lya 21cm pumping
+no level2 lines
+no molecules
+no radiation pressure
+no recoil ionization 
+no scattering opacity
+no Stark broadening
+no static opacities
+no secondary ionizations
+no three body recombination
+no uta ionization
+c
+diffuse field ots
+save continuum ".cnt"
+save overview ".ovr"

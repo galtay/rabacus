@@ -1,0 +1,91 @@
+ -log(Like) =    3900.76293914518     
+  chi-sq    =    7801.52587829037     
+ 
+    1  0.2224228E-01   omegabh2              \Omega_b h^2
+    2  0.1180520E+00   omegach2              \Omega_c h^2
+    3  0.1041497E+01   theta                 100\theta_{MC}
+    4  0.9489437E-01   tau                   \tau
+   16  0.9675460E+00   ns                    n_s
+   19  0.3097826E+01   logA                  {\rm{ln}}(10^{10} A_s)
+   22  0.1544859E+03   aps100                A^{PS}_{100}
+   23  0.6523017E+02   aps143                A^{PS}_{143}
+   24  0.1167360E+03   aps217                A^{PS}_{217}
+   25  0.0000000E+00   acib143               A^{CIB}_{143}
+   26  0.2615462E+02   acib217               A^{CIB}_{217}
+   27  0.5508231E+01   asz143                A^{tSZ}_{143}
+   28  0.9203265E+00   psr                   r^{PS}_{143\times217}
+   29  0.7438801E+00   cibr                  r^{CIB}_{143\times217}
+   30  0.5778619E+00   ncib                  \gamma^{CIB}
+   31  0.1000603E+01   cal0                  c_{100}
+   33  0.9964364E+00   cal2                  c_{217}
+   34  0.2043104E+00   xi                    \xi^{tSZ-CIB}
+   35  0.6021338E+00   aksz                  A^{kSZ}
+   36  0.6269534E+00   bm_1_1                \beta^1_1
+ 
+    5  0.0000000E+00   omegak                \Omega_K
+    6  0.6000000E-01   mnu                   \Sigma m_\nu
+    7  0.0000000E+00   meffsterile           m_{\nu,{\rm{sterile}}}^{\rm{eff}}
+    8 -0.1000000E+01   w                     w
+    9  0.0000000E+00   wa                    w_a
+   10  0.3046000E+01   nnu                   N_{eff}
+   11  0.2400000E+00   yhe                   Y_{He}
+   12  0.0000000E+00   alpha1                \alpha_{-1}
+   13  0.5000000E+00   deltazrei             {\Delta}z_{re}
+   14  0.1000000E+01   Alens                 A_{L}
+   15  0.0000000E+00   fdm                   \epsilon_0 f_d
+   17  0.0000000E+00   nt                    n_t
+   18  0.0000000E+00   nrun                  n_{run}
+   20  0.0000000E+00   r                     r_{0.05}
+   21  0.1000000E+01   Aphiphi               A^{\phi\phi}_L
+   32  0.1000000E+01   cal1                  c_{143}
+   37  0.0000000E+00   bm_1_2                \beta^1_2
+   38  0.0000000E+00   bm_1_3                \beta^1_3
+   39  0.0000000E+00   bm_1_4                \beta^1_4
+   40  0.0000000E+00   bm_1_5                \beta^1_5
+   41  0.0000000E+00   bm_2_1                \beta^2_1
+   42  0.0000000E+00   bm_2_2                \beta^2_2
+   43  0.0000000E+00   bm_2_3                \beta^2_3
+   44  0.0000000E+00   bm_2_4                \beta^2_4
+   45  0.0000000E+00   bm_2_5                \beta^2_5
+   46  0.0000000E+00   bm_3_1                \beta^3_1
+   47  0.0000000E+00   bm_3_2                \beta^3_2
+   48  0.0000000E+00   bm_3_3                \beta^3_3
+   49  0.0000000E+00   bm_3_4                \beta^3_4
+   50  0.0000000E+00   bm_3_5                \beta^3_5
+   51  0.0000000E+00   bm_4_1                \beta^4_1
+   52  0.0000000E+00   bm_4_2                \beta^4_2
+   53  0.0000000E+00   bm_4_3                \beta^4_3
+   54  0.0000000E+00   bm_4_4                \beta^4_4
+   55  0.0000000E+00   bm_4_5                \beta^4_5
+ 
+   56  0.6964268E+00   omegal                \Omega_\Lambda
+   57  0.3035732E+00   omegam                \Omega_m
+   58  0.8284722E+00   sigma8                \sigma_8
+   59  0.1144867E+02   zrei                  z_{re}
+   60  0.0000000E+00   r10                   r_{10}
+   61  0.6813721E+02   H0                    H_0
+   62  0.0000000E+00   r02                   r
+   63  0.2214974E+01   A                     10^9 A_s
+   64  0.1409393E+00   omegamh2              \Omega_m h^2
+   65  0.9603210E-01   omegamh3              \Omega_m h^3
+   66  0.2477851E+00   yheused               Y_P
+   67  0.1832080E+01   clamp                 10^9 A_s e^{-2\tau}
+   68  0.6450616E-03   omeganuh2             \Omega_\nu h^2
+   69  0.1378418E+02   age                   {\rm{Age}}/{\rm{Gyr}}
+   70  0.1090012E+04   zstar                 z_*
+   71  0.1450242E+03   rstar                 r_*
+   72  0.1041639E+01   thetastar             \theta_*
+   73  0.1059589E+04   zdrag                 z_{\rm{drag}}
+   74  0.1477420E+03   rdrag                 r_{\rm{drag}}
+   75  0.1399818E+00   kd                    k_D
+   76  0.1611964E+00   thetad                \theta_D
+   77  0.3352345E+04   zeq                   z_{\rm{eq}}
+   78  0.8224101E+00   thetaeq               \theta_{\rm{eq}}
+   79  0.7207478E-01   rsDv057               r_{\rm{drag}}/D_V(0.57)
+   80  0.3109434E-03   H057                  H(0.57)
+   81  0.1380653E+04   DA057                 D_A(0.57)
+ 
+ -log(Like)     chi-sq   data
+      4.848      9.696   CMB: lensing
+     -3.826     -7.651   CMB: lowl
+   3899.554   7799.108   CMB: CamSpec
