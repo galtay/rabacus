@@ -1,74 +1,74 @@
 Description
 ======================
-Rabacus is a `Python <http://www.python.org>`_  package for performing 
-analytic radiative transfer calculations in simple geometries relevant to 
+Rabacus is a `Python <http://www.python.org>`_  package for performing
+analytic radiative transfer calculations in simple geometries relevant to
 cosmology and astrophysics. It also contains tools to calculate cosmological
-quantities such as the power spectrum and mass function.  
+quantities such as the power spectrum and mass function.
 
 
 Prerequisites
 ======================
 
-The Rabacus package requires three other Python packages and a fortran 
-compiler, 
+The Rabacus package requires three other Python packages and a fortran
+compiler,
 
 - `Scipy <http://www.scipy.org/scipylib/index.html>`_
 - `Numpy <http://www.numpy.org>`_ (version 1.7 or later)
 - `Quantities <https://pythonhosted.org/quantities>`_
-- Fortran compiler in your path.    
+- Fortran compiler in your path.
 
 
 Installing prerequisites with pip
 ------------------------------------
 
-A simple way to install Python packages is using the package manager 
+A simple way to install Python packages is using the package manager
 `pip <https://pypi.python.org/pypi/pip>`_.  To check if you have
-pip installed on your system, type ``pip`` at the command line, :: 
+pip installed on your system, type ``pip`` at the command line, ::
 
   pip
 
 If this produces usage instructions then congratulations, you have pip
-installed.  If not, instructions for installing pip can be found 
+installed.  If not, instructions for installing pip can be found
 `here <http://www.pip-installer.org/en/latest/installing.html>`_.
-To check if the python packages are installed on your system, attempt 
+To check if the python packages are installed on your system, attempt
 to import them from the python command prompt, ::
 
   >>> import scipy
   >>> import numpy as np
   >>> import quantities as pq
 
-If any of these import commands produce an error message you will need 
-to install the proper software before installing Rabacus. 
-Once you have access to pip, you can install any missing prerequisites 
+If any of these import commands produce an error message you will need
+to install the proper software before installing Rabacus.
+Once you have access to pip, you can install any missing prerequisites
 using the following commands, ::
 
   sudo pip install scipy
-  sudo pip install numpy 
+  sudo pip install numpy
   sudo pip install quantities
 
-If you do not have root access on your system you can pass the ``--user`` flag 
-which will install the packages into a hidden folder called ``.local`` in 
+If you do not have root access on your system you can pass the ``--user`` flag
+which will install the packages into a hidden folder called ``.local`` in
 your home directory, ::
 
   pip install --user scipy
-  pip install --user numpy 
+  pip install --user numpy
   pip install --user quantities
 
 
 Installing prerequisites on Debian (Ubuntu)
 ---------------------------------------------
 
-On Debian based systems (such as Ubuntu) you may prefer to install these 
+On Debian based systems (such as Ubuntu) you may prefer to install these
 prerequisites using the APT tool, ::
- 
+
   sudo apt-get install python-scipy python-numpy python-quantities
 
-To increase the speed of execution, much of Rabacus is written in 
-Fortran 90 and then wrapped using the f2py tool that is part of numpy.  For 
-the installation to be successful, a fortran compiler must be in your 
-executable path.  If you don't already have one, I recommend the 
-gnu fortran compiler `gfortran <http://gcc.gnu.org/wiki/GFortran>`_.     
-On Debian based systems (such as Ubuntu) you can install this 
+To increase the speed of execution, much of Rabacus is written in
+Fortran 90 and then wrapped using the f2py tool that is part of numpy.  For
+the installation to be successful, a fortran compiler must be in your
+executable path.  If you don't already have one, I recommend the
+gnu fortran compiler `gfortran <http://gcc.gnu.org/wiki/GFortran>`_.
+On Debian based systems (such as Ubuntu) you can install this
 compiler using the APT tool, ::
 
   sudo apt-get install gfortran
@@ -77,7 +77,7 @@ Installation
 ======================
 
 With the prequisites installed on your system, you are ready to
-install the Rabacus package itself.  
+install the Rabacus package itself.
 
 Setting ``F90``  environment variable
 -------------------------------------
@@ -96,7 +96,7 @@ To use the gfortran compiler, type the following at the command line
 
   export F90=gfortran
 
-To use the intel compiler set :: 
+To use the intel compiler set ::
 
   export F90=ifort
 
@@ -118,9 +118,9 @@ Rabacus into a hidden folder called ``.local`` in your home directory,
   pip install --user rabacus
 
 
-If the last two lines printed to the screen are, :: 
+If the last two lines printed to the screen are, ::
 
-  Successfully installed rabacus 
+  Successfully installed rabacus
   Cleaning up...
 
 then congratulations you have a working copy of Rabacus. To double
@@ -143,7 +143,7 @@ download and untar the Rabacus tar.gz file from the PyPI site
 Rabacus directory, ::
 
   gunzip rabacus-x.x.x.tar.gz
-  tar xvf rabacus-x.x.x.tar 
+  tar xvf rabacus-x.x.x.tar
   cd rabacus-x.x.x
 
 Now we have direct access to the ``setup.py`` file which gives us a
@@ -179,8 +179,8 @@ Edit the ``setup.py`` file such that the variable ``f90_flags`` is a
 list of compile flags and ``omp_lib`` is a list containing the linking
 flags.  For example, ::
 
-  f90_flags = ["-openmp", "-fPIC", "-xHost", "-O3", "-ipo", 
-               "-funroll-loops", "-heap-arrays", "-mcmodel=medium"]  
+  f90_flags = ["-openmp", "-fPIC", "-xHost", "-O3", "-ipo",
+	       "-funroll-loops", "-heap-arrays", "-mcmodel=medium"]
 
   omp_lib = ["-liomp5"]
 
@@ -222,14 +222,14 @@ Testing install
 ------------------------
 
 Detailed examples of using rabacus are available by following the link
-to the users guide below.  However, we present a short example with the 
-expected output below as a way to quickly test that a new installation 
+to the users guide below.  However, we present a short example with the
+expected output below as a way to quickly test that a new installation
 has basic functionality.  We first import rabacus and then create an
 object that gives access to the meta galactic radiation background
-described in 
+described in
 `Haardt & Madau 2012
 <http://adsabs.harvard.edu/abs/2012ApJ...746..125H>`_.  Finally, we
-ask for the photo-heating rate of He I at a redshift of 3.0.  :: 
+ask for the photo-heating rate of He I at a redshift of 3.0.  ::
 
   import rabacus as ra
   hm12 = ra.HM12_Photorates_Table()
@@ -246,7 +246,7 @@ figure due to different processor architectures. ::
 
 Author
 =====================
-Rabacus was written by Gabriel Altay and any questions can be directed 
+Rabacus was written by Gabriel Altay and any questions can be directed
 to gabriel.altay@gmail.com
 
 
@@ -254,8 +254,6 @@ to gabriel.altay@gmail.com
 Project URLs
 =====================
 
-* PyPI (https://pypi.python.org/pypi/rabacus) 
+* PyPI (https://pypi.python.org/pypi/rabacus)
 * documentation (http://pythonhosted.org//rabacus)
-* version control (https://bitbucket.org/galtay/rabacus)
-
-
+* version control (https://github.com/galtay/rabacus)
