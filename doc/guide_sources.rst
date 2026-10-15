@@ -152,7 +152,21 @@ When a source is created, a spectrum is defined by uniformly (in log space)
 sampling `Nnu` energies between the variables `q_min` and `q_max`.  The number 
 of samples, `Nnu`, takes on a default value but can be passed in as a keyword 
 to either increase or decrease spectral resolution.  In general, attributes are
-defined to characterize the energy, frequency, and wavelength of photons.  
+defined to characterize the energy, frequency, and wavelength of photons.
+
+.. note::
+
+   Integrated quantities such as the optically thin photoionization and
+   photoheating rates (e.g. ``src.thin.H1i``) are computed with the
+   trapezoid rule on these energy samples, so they are only as accurate as
+   the sampling.  Cross-sections fall steeply above each ionization
+   threshold, and sparse sampling over a wide energy range overestimates
+   the rates.  For example, an HM12 background at z = 3 sampled with
+   ``Nnu=100`` between ``q_min=1.0e-2`` and ``q_max=1.0e6`` overestimates
+   the H I photoionization rate by about 40%; with ``Nnu=1000`` the error
+   is about 4%.  Check that the quantities you need have converged by
+   increasing `Nnu`, or restrict `q_min` and `q_max` to the energies that
+   matter for your problem.
 
 
  +-----------+-----------------------+
