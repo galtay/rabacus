@@ -103,8 +103,8 @@ class Cosmology(object):
         #--------------------------------------------------------
         need_keys = ['omegam', 'omegal', 'omegab', 'h', 'sigma8', 'ns', 'Yp']
         for key in need_keys:
-            if not cpdict.has_key( key ):
-                raise InitError, ' key missing from cpdict \n' 
+            if key not in cpdict:
+                raise InitError(' key missing from cpdict \n') 
             
         # transfer input parametrs
         #--------------------------------------------------------
@@ -118,7 +118,7 @@ class Cosmology(object):
 
         self.OmegaC = self.OmegaM - self.OmegaB
 
-        if cpdict.has_key('omegar'):
+        if 'omegar' in cpdict:
             self.OmegaR = cpdict['omegar']
         else:
             # if not provided we use OmegaM and zeq from Planck13 
@@ -132,11 +132,11 @@ class Cosmology(object):
         #--------------------------------------------------------
         err = ( self.OmegaR + self.OmegaM + self.OmegaL ) - 1.0
         if err > 1.0e-3:
-            raise InitError, ' OmegaR + OmegaM + OmegaL must be 1.0 \n' + \
+            raise InitError(' OmegaR + OmegaM + OmegaL must be 1.0 \n' + \
                 ' OmegaR: ' + str(self.OmegaR) + '\n' + \
                 ' OmegaM: ' + str(self.OmegaM) + '\n' + \
                 ' OmegaL: ' + str(self.OmegaL) + '\n' + \
-                ' sum: ' + str(self.OmegaR + self.OmegaM + self.OmegaL) + '\n' 
+                ' sum: ' + str(self.OmegaR + self.OmegaM + self.OmegaL) + '\n') 
 
 
         # create physical constants and cosmological units 
@@ -214,7 +214,7 @@ class Cosmology(object):
           z(D_C) = {\rm Inverse}[ D_C(z) ]
         """ 
         if hasattr(Dc,'units'): 
-            Dc.units = 'Mpc/hh'
+            Dc = Dc.rescale('Mpc/hh')
         else:
             msg = '\n Input variable Dc must have units of length. \n'
             raise ValueError(msg)
@@ -230,7 +230,7 @@ class Cosmology(object):
           z(t_L) = {\rm Inverse}[ t_L(z) ]
         """ 
         if hasattr(tL,'units'): 
-            tL.units = 'Myr/hh'
+            tL = tL.rescale('Myr/hh')
         else:
             msg = '\n Input variable tL must have units of time. \n'
             raise ValueError(msg)
@@ -249,7 +249,7 @@ class Cosmology(object):
           t_L(z) = \int_0^z \frac{dz'}{(1+z') H(z')} 
         """ 
         if hasattr(Dc,'units'): 
-            Dc.units = 'Mpc/hh'
+            Dc = Dc.rescale('Mpc/hh')
         else:
             msg = '\n Input variable Dc must have units of length. \n'
             raise ValueError(msg)
@@ -269,7 +269,7 @@ class Cosmology(object):
           D_C(z) = d_{\rm H_0} \int_{0}^{z} \frac{dz'}{E(z')}
         """ 
         if hasattr(tL,'units'): 
-            tL.units = 'Myr/hh'
+            tL = tL.rescale('Myr/hh')
         else:
             raise ValueError('\n Input variable tL must have units \n')
         lopz = self._tL2lopz( tL )
@@ -344,7 +344,7 @@ class Cosmology(object):
           t_{\rm H(a)} = 1 / H(a)
         """
         t = 1.0 / self.Ha(a)
-        t.units = 'Myr/hh'
+        t = t.rescale('Myr/hh')
         return t
 
     def tHz(self, z):
@@ -354,7 +354,7 @@ class Cosmology(object):
           t_{\rm H(z)} = 1 / H(z)
         """
         t = 1.0 / self.Hz(z)
-        t.units = 'Myr/hh'
+        t = t.rescale('Myr/hh')
         return t
 
     def dHa(self, a):
@@ -364,7 +364,7 @@ class Cosmology(object):
           d_{\rm H(a)} = c / H(a)
         """
         d = self.pc.c / self.Ha(a)
-        d.units = 'Mpc/hh'
+        d = d.rescale('Mpc/hh')
         return d
 
     def dHz(self, z):
@@ -374,7 +374,7 @@ class Cosmology(object):
           d_{\rm H(z)} = c / H(z)
         """
         d = self.pc.c / self.Hz(z)
-        d.units = 'Mpc/hh'
+        d = d.rescale('Mpc/hh')
         return d
 
     def rho_crita(self, a):
@@ -462,7 +462,7 @@ class Cosmology(object):
             xx = np.linspace( a_min, a, N )
             yy = 1.0 / ( xx * self.Ha(xx) )
             t = utils.trap( xx, yy )
-        t.units = 'Myr/hh'
+        t = t.rescale('Myr/hh')
 
         # this is analytic but does not include OmegaR        
         #-------------------------------------------------------------------
@@ -527,7 +527,7 @@ class Cosmology(object):
             Dc = Dc * self.dH0
         else:
             Dc = quad( self.iEz, 0.0, z )[0] * self.dH0
-        Dc.units = self.cu.Mpc/self.cu.h
+        Dc = Dc.rescale(self.cu.Mpc/self.cu.h)
         return Dc 
 
     def Dca(self,a):
@@ -552,7 +552,7 @@ class Cosmology(object):
         """
         if utils.isiterable(z1) and utils.isiterable(z2):
             if not len(z1) == len(z2):
-                raise utils.InputError, "len(z1) /= len(z2)"
+                raise utils.InputError("len(z1) /= len(z2)")
         Dc1 = self.Dcz(z1)
         Dc2 = self.Dcz(z2)
         Dc = Dc2 - Dc1
@@ -699,20 +699,20 @@ class Cosmology(object):
 
 
     def __str__(self):
-        print 'Cosmology instance'
-        print '  OmegaR:  %5.3f' % self.OmegaR
-        print '  OmegaM:  %5.3f' % self.OmegaM
-        print '  OmegaB:  %5.3f' % self.OmegaB
-        print '  OmegaC:  %5.3f' % self.OmegaC
-        print '  OmegaL:  %5.3f' % self.OmegaL
-        print '  h:       %5.3f' % self.h
-        print '  sigma_8: %5.3f' % self.sigma8
-        print '  n_s:     %5.3f' % self.ns
-        print '  Y_P:     %5.3f' % self.Yp
-        print 
-        print '  H0: ', self.H0
-        print '  dH: ', self.dH0
-        print '  tH: ', self.tH0
-        print '  rho_crit_0: ', self.rho_crit0
-        print '  eps_crit_0: ', self.eps_crit0
+        print('Cosmology instance')
+        print('  OmegaR:  %5.3f' % self.OmegaR)
+        print('  OmegaM:  %5.3f' % self.OmegaM)
+        print('  OmegaB:  %5.3f' % self.OmegaB)
+        print('  OmegaC:  %5.3f' % self.OmegaC)
+        print('  OmegaL:  %5.3f' % self.OmegaL)
+        print('  h:       %5.3f' % self.h)
+        print('  sigma_8: %5.3f' % self.sigma8)
+        print('  n_s:     %5.3f' % self.ns)
+        print('  Y_P:     %5.3f' % self.Yp)
+        print() 
+        print('  H0: ', self.H0)
+        print('  dH: ', self.dH0)
+        print('  tH: ', self.tH0)
+        print('  rho_crit_0: ', self.rho_crit0)
+        print('  eps_crit_0: ', self.eps_crit0)
         return ''

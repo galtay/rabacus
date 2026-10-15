@@ -5,7 +5,10 @@ import rabacus as ra
 
 
 z = 3.0
-cloudy_exe = '/home/galtay/Downloads/Software/c13.03/source/cloudy.exe'
+cloudy_exe = os.environ.get(
+    'CLOUDY_EXE',
+    os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                 '..', 'build', 'c13.05', 'source', 'cloudy.exe'))
 
 
 
@@ -22,8 +25,8 @@ def write_spectrum_file( z, NH1, NHe1, NHe2, fac=1.0 ):
 
     interpolate_command = []
 
-    uvb.E.units = 'Ry_inf'
-    logE = np.log10( uvb.E.magnitude )
+    E = uvb.E.rescale('Ry_inf')
+    logE = np.log10( E.magnitude )
     logInu = np.log10( uvb.Inu.magnitude * fac * np.exp(-tau.magnitude) ) 
 
     for i in range(Nnu):
@@ -41,8 +44,8 @@ def write_spectrum_file( z, NH1, NHe1, NHe2, fac=1.0 ):
             f.write('continue ')
             f.write( interpolate_command[i] )
             f.write('\n')
-    logInu_norm = np.log10( 4*np.pi*10**logInu[Nnu/2] )
-    logE_norm = logE[Nnu/2]
+    logInu_norm = np.log10( 4*np.pi*10**logInu[Nnu//2] )
+    logE_norm = logE[Nnu//2]
     if logE_norm > 0.0:
         f.write('f(nu) = ' + str(logInu_norm) + ' at ' + 
                 str(10**logE_norm) + '\n')

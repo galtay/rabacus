@@ -93,8 +93,8 @@ class NIST_ASD:
 
         """
 
-        for k,v in self._IonizationEnergies.items():
-            v.units = unit
+        for k,v in list(self._IonizationEnergies.items()):
+            v = v.rescale(unit)
             self._IonizationEnergies[k] = v
 
     def get_ionization_energy(self, Z, N):

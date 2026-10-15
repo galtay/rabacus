@@ -1,1 +1,21 @@
-$HOME/Downloads/Software/c13.03/source/cloudy.exe $1
+#!/bin/sh
+# Run Cloudy on one or more of the input files in this directory, e.g.
+#
+#   ./run iliev_test_1 iliev_test_2
+#
+# reads iliev_test_1.in and writes iliev_test_1.out plus the files
+# requested by "save" commands (prefixed with the run name).  Uses
+# $CLOUDY_EXE, or the build made by install_cloudy.sh if it is unset.
+set -eu
+
+here=$(cd "$(dirname "$0")" && pwd)
+exe=${CLOUDY_EXE:-$here/build/c13.05/source/cloudy.exe}
+if [ ! -x "$exe" ]; then
+    echo "cloudy not found at $exe; run install_cloudy.sh or set CLOUDY_EXE" >&2
+    exit 1
+fi
+
+for name in "$@"; do
+    echo "running $name"
+    "$exe" -p "$name"
+done

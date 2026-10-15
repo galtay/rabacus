@@ -1,6 +1,6 @@
 """ Sphere geometry base class. """ 
 
-import rabacus_fc
+from . import rabacus_fc
 import numpy as np
 from rabacus.utils import utils
 from rabacus.constants import units
@@ -33,7 +33,7 @@ class SphereBase(object):
                 self.rec_meth == 'radial' or
                 self.rec_meth == 'isotropic' )
 
-        if self.find_Teq and self.z==None:
+        if self.find_Teq and self.z is None:
             msg = 'need to supply redshift if finding equilibrium temperature'
             raise ValueError(msg)
 

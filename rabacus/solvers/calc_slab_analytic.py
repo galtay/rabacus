@@ -7,6 +7,7 @@ import numpy as np
 from rabacus.atomic import hydrogen
 from rabacus.atomic import chemistry
 from rabacus.atomic import photo_xsection
+from rabacus.utils import utils
 
 
 __all__ = ['AnalyticSlab']
@@ -106,9 +107,9 @@ class AnalyticSlab:
         distance using tauH. """ 
 
         if hasattr(E,'units'): 
-            E.units = 'eV'
+            E = E.rescale('eV')
         else:
-            raise utils.NeedUnitsError, '\n Input variable E must have units \n'
+            raise utils.NeedUnitsError('\n Input variable E must have units \n')
 
         self.E = E
         self.PX = photo_xsection.PhotoXsections()

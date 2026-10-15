@@ -6,6 +6,7 @@ import numpy as np
 
 #from ...constants import units as units
 from rabacus.constants import units 
+from rabacus.utils import utils
 
 __all__ = ['TransferBBKS']
 
@@ -45,8 +46,8 @@ class TransferBBKS:
         #--------------------------------------------------------
         need_keys = ['omegac', 'h', 'ns']
         for key in need_keys:
-            if not cpdict.has_key( key ):
-                raise InitError, ' key missing from cpdict \n' 
+            if key not in cpdict:
+                raise utils.InputError(' key missing from cpdict \n') 
 
         # transfer variables
         #--------------------------------------------------------
@@ -74,9 +75,9 @@ class TransferBBKS:
         # make sure we have k in 1/Mpch
         #----------------------------------------------
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
         
         # construct the unitless quantity q
         #----------------------------------------------------------------
@@ -109,9 +110,9 @@ class TransferBBKS:
         # make sure we have k in 1/Mpch
         #----------------------------------------------
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
 
         T_cdm = self.T_cdm( k )
 
@@ -140,9 +141,9 @@ class TransferBBKS:
         # make sure we have k in 1/Mpch
         #----------------------------------------------
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
 
         kk = np.array(k)
         T = self.T_cdm( k )
@@ -166,9 +167,9 @@ class TransferBBKS:
         # make sure we have k in 1/Mpch
         #----------------------------------------------
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
 
         kk = np.array(k)
         T = self.T_b( k )

@@ -398,7 +398,7 @@ class Solve_PCE:
             msg = 'No temperatures can be below T_floor = ' + \
                 str(TFLOOR) + ' K \n' + 'kchem.T.min() = ' + \
                 str(kchem.T.min())
-            raise utils.InputError, msg
+            raise utils.InputError(msg)
 
         # solve
         #----------------------------------------------
@@ -438,27 +438,27 @@ class Solve_PCE:
 
         if not len(nH.shape) == len(nHe.shape) == len(kchem.T.shape) == 1:
             msg = '\n Input arrays must be one dimensional'
-            raise utils.InputError, msg
+            raise utils.InputError(msg)
 
         if not hasattr(nH,'units'):
             msg = '\n Input variable nH must have units \n'
-            raise utils.NeedUnitsError, msg
+            raise utils.NeedUnitsError(msg)
 
         if not hasattr(nHe,'units'): 
             msg = '\n Input variable nHe must have units \n'
-            raise utils.NeedUnitsError, msg
+            raise utils.NeedUnitsError(msg)
 
         if nH.shape != nHe.shape: 
             msg = '\n nH and nHe must have the same shape \n'
-            raise utils.InputError, msg
+            raise utils.InputError(msg)
 
         if self.two_dim_output == False and nH.shape != kchem.T.shape:
             msg = '\n For two_dim_output=False, nH, nHe, and kchem.T ' + \
                 'must have the same shape \n'
-            print 'nH.shape: ', nH.shape
-            print 'nHe.shape: ', nHe.shape
-            print 'kchem.T.shape: ', kchem.T.shape
-            raise utils.InputError, msg
+            print('nH.shape: ', nH.shape)
+            print('nHe.shape: ', nHe.shape)
+            print('kchem.T.shape: ', kchem.T.shape)
+            raise utils.InputError(msg)
 
 
         # attach input
@@ -471,12 +471,12 @@ class Solve_PCE:
         # screen report
         #--------------------------------------
         if self.verbose:
-            print 'calculating photo/collisional ionization equilibrium' 
-            print ' Nrho,NT: ', (nH.size,kchem.T.size)
-            print ' two_dim_output: ', self.two_dim_output
-            print ' nH min/max: ', nH.min(), nH.max()
-            print ' T  min/max: ', kchem.T.min(), kchem.T.max()
-            print 
+            print('calculating photo/collisional ionization equilibrium') 
+            print(' Nrho,NT: ', (nH.size,kchem.T.size))
+            print(' two_dim_output: ', self.two_dim_output)
+            print(' nH min/max: ', nH.min(), nH.max())
+            print(' T  min/max: ', kchem.T.min(), kchem.T.max())
+            print() 
 
 
         # create some output arrays
@@ -499,7 +499,7 @@ class Solve_PCE:
 
             if self.kchem.T.shape != self.nH.shape:
                 msg = '\n shapes dont match after kchem.extend \n'
-                raise utils.InputError, msg
+                raise utils.InputError(msg)
 
         else:
 
@@ -565,17 +565,17 @@ class Solve_PCE:
             # dummy check that it is between min and max values
             #---------------------------------------------
             if np.any( (self.ne / self.ne_max) > (1.0 + self.tol) ):
-                print 'ne > ne_max !!!'
+                print('ne > ne_max !!!')
                 indx = np.where( self.ne > self.ne_max )
                 for i in indx[0]:
-                    print 'ne,ne_max: ', self.ne[i], self.ne_max[i]
+                    print('ne,ne_max: ', self.ne[i], self.ne_max[i])
                 sys.exit(1)
 
             if np.any( (self.ne / self.ne_min) < (1.0 - self.tol) ):
-                print 'ne < ne_min !!!'
+                print('ne < ne_min !!!')
                 indx = np.where( self.ne < self.ne_min )
                 for i in indx[0]:
-                    print 'ne,ne_min: ', self.ne[i], self.ne_min[i]
+                    print('ne,ne_min: ', self.ne[i], self.ne_min[i])
                 sys.exit(1)
 
             # calculate new errors and store value in ne_old
@@ -606,16 +606,16 @@ class Solve_PCE:
             if itr > MAX_ITR:
                 txt = ' Solve_PCE has not converged after ' 
                 txt += str(MAX_ITR) + ' iterations'
-                print txt
+                print(txt)
 
-                print 'xH1: ', x_ne.H1
-                print 'xH2: ', x_ne.H2
-                print 'ne: ', self.ne
-                print 'ne_old: ', ne_old
-                print 'ne_ratio: ', ne_ratio
-                print 'err: ', err
-                print 'xH1 ce: ', self.x_ce.H1
-                print 'xH2 ce: ', self.x_ce.H2
+                print('xH1: ', x_ne.H1)
+                print('xH2: ', x_ne.H2)
+                print('ne: ', self.ne)
+                print('ne_old: ', ne_old)
+                print('ne_ratio: ', ne_ratio)
+                print('err: ', err)
+                print('xH1 ce: ', self.x_ce.H1)
+                print('xH2 ce: ', self.x_ce.H2)
 
                 sys.exit(1)
 
@@ -871,7 +871,7 @@ class Solve_PCTE:
 
         if not hasattr(nH,'units'): 
             msg = '\n Input variable nH must have units \n'
-            raise utils.NeedUnitsError, msg
+            raise utils.NeedUnitsError(msg)
 
         # check nHe input
         #----------------------------------------------
@@ -882,7 +882,7 @@ class Solve_PCTE:
 
         if not hasattr(nHe,'units'): 
             msg = '\n Input variable nHe must have units \n'
-            raise utils.NeedUnitsError, msg
+            raise utils.NeedUnitsError(msg)
 
         # check all arrays are 1-D 
         #----------------------------------------------
@@ -897,7 +897,7 @@ class Solve_PCTE:
                len(kcool.He1h.shape) == \
                len(kcool.He2h.shape) == 1:
             msg = '\n Input arrays must be one dimensional'
-            raise utils.InputError, msg
+            raise utils.InputError(msg)
 
         # check consistency of sizes
         #----------------------------------------------
@@ -910,14 +910,14 @@ class Solve_PCTE:
                 'kcool.H1h, kcool.He1h, kcool.He2h \n' +\
                 'must all have the same shape and size \n'
 
-            print 'nH/nHe.shape: ', nH.shape, nHe.shape
-            print 'kchem/kcool.T.shape: ', kchem.T.shape, kcool.T.shape
-            print 'kchem.H1i/He1i/He2i.shape: ', kchem.H1i.shape, \
-                kchem.He1i.shape, kchem.He2i.shape
-            print 'kcool.H1h/He1h/He2h.shape: ', kcool.H1h.shape, \
-                kcool.He1h.shape, kcool.He2h.shape
+            print('nH/nHe.shape: ', nH.shape, nHe.shape)
+            print('kchem/kcool.T.shape: ', kchem.T.shape, kcool.T.shape)
+            print('kchem.H1i/He1i/He2i.shape: ', kchem.H1i.shape, \
+                kchem.He1i.shape, kchem.He2i.shape)
+            print('kcool.H1h/He1h/He2h.shape: ', kcool.H1h.shape, \
+                kcool.He1h.shape, kcool.He2h.shape)
 
-            raise utils.InputError, msg
+            raise utils.InputError(msg)
 
         # make copies of input
         #--------------------------------------
@@ -1063,7 +1063,7 @@ class Solve_PCTE:
             nHe = self.nHe[~b_floor]
 
             if  np.any( dudTmin < 0 ) or np.any( dudTmax > 0 ):
-                print ' !!!! Teq not bracketed !!!! '
+                print(' !!!! Teq not bracketed !!!! ')
                 return
                 sys.exit(1)
                 
@@ -1163,13 +1163,13 @@ class Solve_PCTE:
                 if itr > MAX_ITR:
                     txt = ' have not converged after ' 
                     txt += str(MAX_ITR) + ' iterations'
-                    print txt
+                    print(txt)
                     
-                    print x_eq.H1, x_eq.H2
-                    print x_eq.He1, x_eq.He2, x_eq.He3
-                    print T, Told
-                    print Tratio
-                    print err
+                    print(x_eq.H1, x_eq.H2)
+                    print(x_eq.He1, x_eq.He2, x_eq.He3)
+                    print(T, Told)
+                    print(Tratio)
+                    print(err)
                     
                     
                     sys.exit(1)
@@ -1273,18 +1273,18 @@ class ImplicitIonfracs:
         # check input
         #----------------------------------------------
         if not hasattr(ne,'units'): 
-            raise NeedUnitsError, '\n Input variable ne must have units \n'
+            raise utils.NeedUnitsError('\n Input variable ne must have units \n')
 
         if not hasattr(nH,'units'): 
-            raise NeedUnitsError, '\n Input variable nH must have units \n'
+            raise utils.NeedUnitsError('\n Input variable nH must have units \n')
 
         if not hasattr(nHe,'units'): 
-            raise NeedUnitsError, '\n Input variable nHe must have units \n'
+            raise utils.NeedUnitsError('\n Input variable nHe must have units \n')
 
         msg = '\n ne, nH, nHe, and rates arrays must have the same shape \n'
         if not ne.shape == nH.shape == nHe.shape == kchem.T.shape: 
-            print ne.shape, nH.shape, nHe.shape, kchem.T.shape
-            raise InputError, msg
+            print(ne.shape, nH.shape, nHe.shape, kchem.T.shape)
+            raise utils.InputError(msg)
 
 
         # attach input

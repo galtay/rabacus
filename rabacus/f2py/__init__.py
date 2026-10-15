@@ -28,11 +28,11 @@ Geometric Solvers
 
 """
 
-from chem_cool_rates import *
-from ion_solver import *
-from slab_plane import *
-from slab_bgnd import *
-from sphere_stromgren import *
-from sphere_bgnd import *
-from special_functions import *
+from .chem_cool_rates import *
+from .ion_solver import *
+from .slab_plane import *
+from .slab_bgnd import *
+from .sphere_stromgren import *
+from .sphere_bgnd import *
+from .special_functions import *
 

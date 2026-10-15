@@ -9,7 +9,7 @@ hden -3
 sphere static
 radius 1 parsec
 stop radius 6600 parsec linear 
-laser, frequency 1.0 Ryd
+laser, frequency 1.1 Ryd
 Q(H) 48.69897
 iterate 2 times
 c

@@ -1,191 +1,85 @@
-import time 
+"""
+Plot rabacus Stromgren spheres against the Cloudy reference profiles.
+
+Reads ``reference/*.txt`` (see ``make_reference.sh``), solves the
+matching rabacus spheres (see ``spheres.py``), saves plots to ``png/``
+and prints the radius at which the neutral fraction crosses 0.5 in
+both codes.  Run from any directory.
+"""
+
+import os
+
+import matplotlib
+
+matplotlib.use("Agg")
+
 import numpy as np
-import rabacus as ra
-import scipy
+import pylab as plt
+
+import spheres
 
 
-# setup Stromgren sphere
-#=================================================================
+png_dir = os.path.join(spheres.HERE, "png")
+os.makedirs(png_dir, exist_ok=True)
 
-Rsphere = 6.6 * ra.U.kpc
+sources = spheres.make_sources()
+refs = {}
+sols = {}
+for name in spheres.MODELS:
+    refs[name] = spheres.read_reference(name)
+    sols[name] = spheres.solve(name, refs[name], sources)
 
-Ln = 5.0e48 / ra.U.s  # set photon luminosity
-Nnu = 128
-
-q_mono = 1.1
-q_min = q_mono
-q_max = q_mono
-src_mono = ra.rad_src.PointSource( q_min, q_max, 'monochromatic' )
-src_mono.normalize_Ln( Ln )
-
-q_min = 1.0
-q_max = 10.0
-T_eff = 1.0e5 * ra.U.K
-src_thrm = ra.rad_src.PointSource( q_min, q_max, 'thermal', T_eff=T_eff,
-                                   Nnu=Nnu)
-src_thrm.normalize_Ln( Ln )
+    r_ra = sols[name].r_c.rescale("kpc").magnitude
+    r_cl = refs[name]["r"].magnitude
+    rf_ra = spheres.front_radius(r_ra, sols[name].xH1)
+    rf_cl = spheres.front_radius(r_cl, refs[name]["xHI"])
+    print(
+        f"{name}: xHI=0.5 at r = {rf_ra:.4f} kpc (rabacus), "
+        f"{rf_cl:.4f} kpc (cloudy), rel diff = {(rf_ra - rf_cl) / rf_cl:+.2%}"
+    )
 
 
-spheres = {}
+def plot_xH1(ax, name, ls="-", label=""):
+    s = sols[name]
+    ref = refs[name]
+    ax.plot(s.r_c.rescale("kpc"), np.log10(s.xH1), color="red", ls=ls,
+            label=f"rabacus {label}")
+    ax.plot(ref["r"], np.log10(ref["xHI"]), color="blue", ls=ls,
+            label=f"cloudy {label}")
 
 
-def read_cloudy( fbase ):
-
-    fname = fbase + '.out'
-    f = open( fname, 'r' )
-    lines = f.readlines()
-    f.close()
-    line = lines[-2]
-    nzone = int( line.partition(':')[2].partition( 'zones' )[0] )
-    
-    fname = fbase + '.ovr'
-    dat_all = np.loadtxt( fname )
-    dat = dat_all[-nzone:,:]
-    return dat
+def finish(fig, ax, title, fname, ylabel=r"$\log_{10} x_{\rm HI}$"):
+    ax.set_xlabel("r [kpc]")
+    ax.set_ylabel(ylabel)
+    ax.set_title(title)
+    ax.legend(loc="best", fontsize=8)
+    fig.savefig(os.path.join(png_dir, fname))
 
 
-def set_sphere( dat ):
-
-    Nl = dat[:,0].size 
-    T = np.ones(Nl) * 1.0e4 * ra.U.K
-    nH = np.ones(Nl) * 1.0e-3 / ra.U.cm**3
-    nHe = np.ones(Nl) * 8.7e-5 / ra.U.cm**3
-    nHe_null = np.ones(Nl) * 1.0e-15 / ra.U.cm**3
-
-    r_c = dat[:,0] * ra.U.cm
-    Edges = np.zeros( Nl+1 ) * ra.U.kpc
-    Edges[0] = 0.0 * ra.U.cm
-    Edges[-1] = Rsphere
-    for i in range(1,Nl):
-        Edges[i] = ( r_c[i-1] + r_c[i] ) * 0.5
-    return (Edges, T, nH, nHe, nHe_null) 
-
-#=================================================================
 # Iliev 06 tests
 #=================================================================
 
+for name in ["iliev_test_1", "iliev_test_2"]:
+    fig, ax = plt.subplots()
+    plot_xH1(ax, name)
+    finish(fig, ax, name, f"{name}_xH1.png")
 
-# radiative transfer case B mono fix T
-#-----------------------------------------------------------------
-key = 'iliev_test_1'
-dat = read_cloudy( 'iliev_test_1' )
-(Edges, T, nH, nHe, nHe_null) = set_sphere( dat )
-t1 = time.time()
-spheres[key] = ra.f2py.StromgrenSphere( 
-    Edges, T, nH, nHe_null, src_mono, fixed_fcA=0.0 )
-t2 = time.time()
-print key + ' ' + str(t2-t1)
-
-plt.figure()
-plt.plot( dat[:,0], dat[:,6], color='blue' )
-s = spheres['iliev_test_1']
-s.r_c.units = 'cm'
-plt.plot( s.r_c, np.log10( s.xH1 ), color='red' )
-plt.show()
+name = "iliev_test_2"
+fig, ax = plt.subplots()
+ax.plot(sols[name].r_c.rescale("kpc"), np.log10(sols[name].T.magnitude),
+        color="red", label="rabacus")
+ax.plot(refs[name]["r"], np.log10(refs[name]["T"].magnitude),
+        color="blue", label="cloudy")
+finish(fig, ax, name, f"{name}_T.png", ylabel=r"$\log_{10} T$ [K]")
 
 
-
-
-# radiative transfer case B thermal
-#-----------------------------------------------------------------
-key = 'iliev_test_2'
-dat = read_cloudy( 'iliev_test_2' )
-(Edges, T, nH, nHe, nHe_null) = set_sphere( dat )
-t1 = time.time()
-spheres[key] = ra.f2py.StromgrenSphere( 
-    Edges, T, nH, nHe_null, src_thrm, find_Teq=True, z=0.0, fixed_fcA=0.0 )
-t2 = time.time()
-print key + ' ' + str(t2-t1)
-
-plt.figure()
-plt.plot( dat[:,0], dat[:,6], color='blue' )
-s = spheres['iliev_test_2']
-s.r_c.units = 'cm'
-plt.plot( s.r_c, np.log10( s.xH1 ), color='red' )
-plt.show()
-
-plt.figure()
-plt.plot( dat[:,0], dat[:,1], color='blue' )
-s = spheres['iliev_test_2']
-s.r_c.units = 'cm'
-plt.plot( s.r_c, np.log10( s.T.magnitude ), color='red' )
-plt.show()
-
-
-
-
-
-#=================================================================
-# Raiveciv 14 Tests
+# Raicevic 14 tests
 #=================================================================
 
-# radiative transfer case A mono fix T
-#-----------------------------------------------------------------
-key = 'raicevic_case_A'
-dat = read_cloudy( 'raicevic_case_A' )
-(Edges, T, nH, nHe, nHe_null) = set_sphere( dat )
-t1 = time.time()
-spheres[key] = ra.f2py.StromgrenSphere( 
-    Edges, T, nH, nHe_null, src_mono, fixed_fcA=1.0 )
-t2 = time.time()
-print key + ' ' + str(t2-t1)
-
-# radiative transfer case B mono fix T
-#-----------------------------------------------------------------
-key = 'raicevic_case_B'
-dat = read_cloudy( 'raicevic_case_B' )
-(Edges, T, nH, nHe, nHe_null) = set_sphere( dat )
-t1 = time.time()
-spheres[key] = ra.f2py.StromgrenSphere( 
-    Edges, T, nH, nHe_null, src_mono, fixed_fcA=0.0 )
-t2 = time.time()
-print key + ' ' + str(t2-t1)
-
-# radiative transfer outward mono fix T
-#-----------------------------------------------------------------
-key = 'raicevic_outward'
-dat = read_cloudy( 'raicevic_outward' )
-(Edges, T, nH, nHe, nHe_null) = set_sphere( dat )
-t1 = time.time()
-
-Nl = dat[:,0].size 
-T = np.ones(Nl) * 1.0e4 * ra.U.K
-nH = np.ones(Nl) * 1.0e-3 / ra.U.cm**3
-nHe = np.ones(Nl) * 8.7e-5 / ra.U.cm**3
-nHe_null = np.ones(Nl) * 1.0e-15 / ra.U.cm**3
-Edges = np.linspace( 0.0 * ra.U.kpc, Rsphere, Nl+1 )
-
-spheres[key] = ra.f2py.StromgrenSphere( 
-    Edges, T, nH, nHe_null, src_mono, rec_meth='outward' )
-t2 = time.time()
-print key + ' ' + str(t2-t1)
-
-
-
-plt.figure()
-s = spheres['raicevic_case_A']
-s.r_c.units = 'cm'
-plt.plot( s.r_c, np.log10( s.xH1 ), color='red', ls='-' )
-dat = read_cloudy( 'raicevic_case_A' )
-plt.plot( dat[:,0], dat[:,6], color='blue', ls='-' )
-
-s = spheres['raicevic_case_B']
-s.r_c.units = 'cm'
-plt.plot( s.r_c, np.log10( s.xH1 ), color='red', ls=':' )
-dat = read_cloudy( 'raicevic_case_B' )
-plt.plot( dat[:,0], dat[:,6], color='blue', ls=':' )
-
-s = spheres['raicevic_outward']
-s.r_c.units = 'cm'
-plt.plot( s.r_c, np.log10( s.xH1 ), color='red', ls='--' )
-dat = read_cloudy( 'raicevic_outward' )
-plt.plot( dat[:,0], dat[:,6], color='blue', ls='--' )
-
-plt.xlim( 0.5e22, 2.1e22 )
-plt.ylim( -2.5, 0.1 )
-
-
-
-plt.show()
-
-sys.exit(1)
+fig, ax = plt.subplots()
+for name, ls in [("raicevic_case_A", "-"), ("raicevic_case_B", ":"),
+                 ("raicevic_outward", "--")]:
+    plot_xH1(ax, name, ls=ls, label=name.replace("raicevic_", ""))
+ax.set_xlim(1.6, 6.8)
+ax.set_ylim(-2.5, 0.1)
+finish(fig, ax, "raicevic 14", "raicevic_xH1.png")

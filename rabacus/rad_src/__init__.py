@@ -100,7 +100,7 @@ shape given by the model of Haardt and Madau 2012 at redshift 3 between 1 and
 """
 
 
-from background import *
-from plane import *
-from point import *
+from .background import *
+from .plane import *
+from .point import *
 

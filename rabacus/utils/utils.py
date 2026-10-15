@@ -1,5 +1,5 @@
 import numpy as np
-import collections
+import collections.abc
 
 
 __all__ = ['NeedUnitsError', 'InputError', 'isiterable', 'trap', 
@@ -37,12 +37,12 @@ def isiterable(obj):
     """ Returns `True` if the given object is iterable.  Taken from the 
     Astropy souce code. """
 
-    # Numpy arrays are in collections.Iterable no matter what, but if you
+    # Numpy arrays are in collections.abc.Iterable no matter what, but if you
     # attempt to iterate over a 0-d array, it throws a TypeError.
     if isinstance(obj, np.ndarray) and len(obj.shape) == 0:
         return False
 
-    if isinstance(obj, collections.Iterable):
+    if isinstance(obj, collections.abc.Iterable):
         return True
 
     try:

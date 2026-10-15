@@ -1,8 +1,8 @@
 """ Wrapper to make python calling easy. """ 
 
-import rabacus_fc
+from . import rabacus_fc
 import numpy as np
-from slab_base import SlabBase
+from .slab_base import SlabBase
 from rabacus.constants import units
 from rabacus.utils import utils
 from rabacus.atomic import chemistry
@@ -159,7 +159,7 @@ class Slab2Bgnd(SlabBase):
         self.tol = tol
         self.thin = thin
 
-        if z != None:
+        if z is not None:
             self.z = z
         else:
             self.z = 0.0
@@ -169,7 +169,7 @@ class Slab2Bgnd(SlabBase):
         #-----------------------------------------------
         super(Slab2Bgnd,self).__init__()
 
-        if Hz == None:
+        if Hz is None:
             self.Hz = 0.0 / self.U.s
         else:
             self.Hz = Hz
@@ -522,7 +522,7 @@ class Slab2Bgnd(SlabBase):
         # write slab thickness
         #-----------------------------------------------------
         Lslab = self.Edges[-1] - self.Edges[0]
-        Lslab.units = 'kpc'
+        Lslab = Lslab.rescale('kpc')
 
         attrs = {
             'units': units_string(Lslab), 

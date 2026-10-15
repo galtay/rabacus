@@ -1,6 +1,6 @@
 """ Wrapper to make the fortran calling identical to the python calling. """ 
 
-import rabacus_fc 
+from . import rabacus_fc
 import numpy as np
 
 from rabacus.atomic import chemistry 
@@ -349,13 +349,13 @@ class Solve_PCE:
             msg = '\n Input variable nH must have units \n'
             raise ValueError(msg) 
         else:
-            nH.units = 'cm**-3'
+            nH = nH.rescale('cm**-3')
         
         if not hasattr(nHe,'units'): 
             msg = '\n Input variable nHe must have units \n'
             raise ValueError(msg)
         else:
-            nHe.units = 'cm**-3'
+            nHe = nHe.rescale('cm**-3')
 
         if nH.shape != nHe.shape: 
             msg = '\n nH and nHe must have the same shape \n'
@@ -575,13 +575,13 @@ class Solve_PCTE:
 
         # attach keywords
         #----------------------------------------------
-        if Hz == None:
+        if Hz is None:
             Hz = 0.0
         else:
             if not hasattr(Hz,'units'): 
-                raise ValueError, '\n Hz must have units \n'
+                raise ValueError('\n Hz must have units \n')
             else:
-                Hz.units = '1/s'
+                Hz = Hz.rescale('1/s')
 
         self.Hz = Hz
         self.tol = tol
@@ -604,13 +604,13 @@ class Solve_PCTE:
             msg = '\n Input variable nH must have units \n'
             raise ValueError(msg) 
         else:
-            nH.units = 'cm**-3'
+            nH = nH.rescale('cm**-3')
         
         if not hasattr(nHe,'units'): 
             msg = '\n Input variable nHe must have units \n'
             raise ValueError(msg)
         else:
-            nHe.units = 'cm**-3'
+            nHe = nHe.rescale('cm**-3')
 
         if len(kchem.T.shape) != 1:
             msg = "input arrays must be 1-D for fortran routines." 

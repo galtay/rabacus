@@ -4,4 +4,4 @@ cross-sections.
 http://www.pa.uky.edu/~verner/photo.html
 """
 
-from verner_photox import *
+from .verner_photox import *

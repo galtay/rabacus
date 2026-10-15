@@ -41,7 +41,7 @@ def raa( fname, path ):
 
     attrs = {}
     with h5py.File( fname, 'r' ) as h5f:
-        attr_names = h5f[path].attrs.keys()
+        attr_names = list(h5f[path].attrs.keys())
         for name in attr_names:
             attrs[name] = h5f[path].attrs[name]
     return attrs
@@ -56,7 +56,7 @@ def rd( fname, path, dtype=None ):
     data = None    
     with h5py.File( fname, 'r' ) as h5f:
         ds = h5f[path]
-        if dtype == None:
+        if dtype is None:
             dtype = ds.dtype
         data = np.zeros( ds.shape, dtype=dtype )
         data = ds.value
@@ -99,7 +99,7 @@ def wd( fname, path, name, buf, attrs=None, overwrite=False ):
             h5f.create_dataset( ds_path, data=buf )
 
             if attrs:
-                for k,v in attrs.items():        
+                for k,v in list(attrs.items()):        
                     h5f[ds_path].attrs[k] = v
 
 

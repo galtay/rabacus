@@ -3,7 +3,7 @@ import pylab as plt
 import numpy as np
 
 z = 3.0
-Nnu = 100
+Nnu = 5000  # rates are not converged with ~100 samples over q_min - q_max
 q_min = 1.0e-2
 q_max = 1.0e6
 uvb = ra.BackgroundSource( q_min, q_max, 'hm12', z=z, Nnu=Nnu )
@@ -47,3 +47,5 @@ plt.loglog( T, heat, color='black', lw=2.0 )
 plt.loglog( T, heat_H1 )
 plt.loglog( T, heat_He1 )
 plt.loglog( T, heat_He2 )
+
+plt.savefig( 'rabacus_heating.png' )

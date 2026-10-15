@@ -9,14 +9,14 @@ from rabacus.constants import units
 from rabacus.hdf5 import h5py_wrap as h5
 from rabacus.utils import units_string
 
-from hm12 import HM12Spectrum
-from thermal import ThermalSpectrum
-from powerlaw import PowerlawSpectrum
-from monochromatic import MonochromaticSpectrum
-from source import Source
+from .hm12 import HM12Spectrum
+from .thermal import ThermalSpectrum
+from .powerlaw import PowerlawSpectrum
+from .monochromatic import MonochromaticSpectrum
+from .source import Source
 
 
-import species
+from . import species
 
 
 __all__ = ['BackgroundSource']
@@ -479,7 +479,7 @@ class BackgroundSource(Source):
             H1i = self.thin.H1i * atten
         else:
             H1i = utils.trap( self.E, self._dH1i_over_dE * atten )
-        H1i.units = '1/s'
+        H1i = H1i.rescale('1/s')
         return H1i
 
     def shld_H1h(self, tauH1_th, tauHe1_th, tauHe2_th):
@@ -502,7 +502,7 @@ class BackgroundSource(Source):
             H1h = self.thin.H1h * atten
         else:
             H1h = utils.trap( self.E, self._dH1h_over_dE * atten )
-        H1h.units = 'erg/s'
+        H1h = H1h.rescale('erg/s')
         return H1h
 
 
@@ -520,7 +520,7 @@ class BackgroundSource(Source):
             He1i = self.thin.He1i * atten
         else:
             He1i = utils.trap( self.E, self._dHe1i_over_dE * atten )
-        He1i.units = '1/s'
+        He1i = He1i.rescale('1/s')
         return He1i
 
     def shld_He1h(self, tauH1_th, tauHe1_th, tauHe2_th):
@@ -536,7 +536,7 @@ class BackgroundSource(Source):
             He1h = self.thin.He1h * atten
         else:
             He1h = utils.trap( self.E, self._dHe1h_over_dE * atten )
-        He1h.units = 'erg/s'
+        He1h = He1h.rescale('erg/s')
         return He1h
 
 
@@ -554,7 +554,7 @@ class BackgroundSource(Source):
             He2i = self.thin.He2i * atten
         else:
             He2i = utils.trap( self.E, self._dHe2i_over_dE * atten )
-        He2i.units = '1/s'
+        He2i = He2i.rescale('1/s')
         return He2i
 
     def shld_He2h(self, tauH1_th, tauHe1_th, tauHe2_th):
@@ -570,7 +570,7 @@ class BackgroundSource(Source):
             He2h = self.thin.He2h * atten
         else:
             He2h = utils.trap( self.E, self._dHe2h_over_dE * atten )
-        He2h.units = 'erg/s'
+        He2h = He2h.rescale('erg/s')
         return He2h
 
 
@@ -603,9 +603,9 @@ class BackgroundSource(Source):
         """ 
 
         if not hasattr(n,'units'): 
-            raise utils.NeedUnitsError, '\n n must have units, e.g. cm^-3 \n'
+            raise utils.NeedUnitsError('\n n must have units, e.g. cm^-3 \n')
         else:
-            n.units = 'cm^-3'
+            n = n.rescale('cm^-3')
 
         fac = n / self.thin.n
         self.scale_spectrum( fac )
@@ -620,9 +620,9 @@ class BackgroundSource(Source):
         """ 
 
         if not hasattr(H1i,'units'): 
-            raise utils.NeedUnitsError, '\n H1i must have units, e.g. s^-1 \n'
+            raise utils.NeedUnitsError('\n H1i must have units, e.g. s^-1 \n')
         else:
-            H1i.units = 's^-1'
+            H1i = H1i.rescale('s^-1')
 
         fac = H1i / self.thin.H1i
         self.scale_spectrum( fac )

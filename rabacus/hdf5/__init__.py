@@ -1,1 +1,1 @@
-from h5py_wrap import *
+from .h5py_wrap import *

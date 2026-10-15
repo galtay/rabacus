@@ -294,7 +294,7 @@ class HM12_UVB_Table:
 
         # evaluate at requested wavelengths
         #-----------------------------------------------------------------
-        lam.units = 'cm' 
+        lam = lam.rescale('cm') 
         log_lam_cm = np.log10( lam.magnitude )
         log_Inu = intrpf( log_lam_cm )
         Inu = 10**log_Inu * self.Inu.units
@@ -322,9 +322,9 @@ class HM12_UVB_Table:
 
         # evaluate at requested wavelengths
         #-----------------------------------------------------------------
-        nu.units = 'Hz'  # just to make sure we have an frequency
+        nu = nu.rescale('Hz')  # just to make sure we have an frequency
         lam = self.pc.c / nu
-        lam.units = 'cm' 
+        lam = lam.rescale('cm') 
         log_lam_cm = np.log10( lam.magnitude )
         log_Inu = intrpf( log_lam_cm )
         Inu = 10**log_Inu * self.Inu.units
@@ -352,9 +352,9 @@ class HM12_UVB_Table:
 
         # evaluate at requested energies
         #-----------------------------------------------------------------
-        E.units = 'eV'    # just to make sure we have an energy
+        E = E.rescale('eV')    # just to make sure we have an energy
         lam = self.pc.c / ( E / self.pc.h )
-        lam.units = 'cm' 
+        lam = lam.rescale('cm') 
         log_lam_cm = np.log10( lam.magnitude )
         log_Inu = intrpf( log_lam_cm )
         Inu = 10**log_Inu * self.Inu.units

@@ -273,17 +273,17 @@ class Source:
             raise utils.InputError( msg )        
 
         if self.spectrum_type == 'hm12':
-            if self.z == None:
+            if self.z is None:
                 msg = '\nif source type = hm12, must provide z'
                 raise utils.InputError( msg )
 
         if self.spectrum_type == 'thermal':
-            if self.T_eff == None:
+            if self.T_eff is None:
                 msg = '\nif source type = thermal, must provide T_eff'
                 raise utils.InputError( msg )
 
         if self.spectrum_type == 'powerlaw':
-            if self.alpha == None:
+            if self.alpha is None:
                 msg = '\nif source type = powerlaw, must provide alpha'
                 raise utils.InputError( msg )
 

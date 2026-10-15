@@ -1,8 +1,8 @@
 """ Wrapper to make the fortran calling identical to the python calling. """ 
 
-import rabacus_fc
+from . import rabacus_fc
 import numpy as np
-from slab_base import SlabBase
+from .slab_base import SlabBase
 from rabacus.constants import units
 from rabacus.utils import utils
 from rabacus.atomic import chemistry
@@ -165,7 +165,7 @@ class SlabPln(SlabBase):
         #-----------------------------------------------
         super(SlabPln, self).__init__()
 
-        if Hz == None:
+        if Hz is None:
             self.Hz = 0.0 / self.U.s
         else:
             self.Hz = Hz
@@ -398,7 +398,7 @@ class Slab2Pln(SlabBase):
         #-----------------------------------------------
         super(Slab2Pln,self).__init__()
 
-        if Hz == None:
+        if Hz is None:
             self.Hz = 0.0 / self.U.s
         else:
             self.Hz = Hz

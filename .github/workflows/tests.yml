@@ -1,0 +1,61 @@
+name: tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      slow:
+        description: "Also run the slow Python vs. Fortran comparisons"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / py${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # macos-15 is Apple Silicon, macos-15-intel is x86_64
+        os: [ubuntu-24.04, macos-15, macos-15-intel]
+        python-version: ["3.12", "3.13", "3.14"]
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up gfortran
+        uses: fortran-lang/setup-fortran@be037f0a45b1160f139d4ccd0b96f9e9bfd6a682 # v1.10.0
+        with:
+          compiler: gcc
+          version: 14
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+
+      # setup-fortran also points CC at gcc; use the system C compiler
+      # (clang on macOS) for the f2py C wrapper, as in a local build.
+      - name: Build and install
+        run: uv sync --locked
+        env:
+          CC: cc
+
+      - name: Fast tests
+        run: uv run pytest -v
+
+      - name: Slow tests
+        if: ${{ inputs.slow }}
+        run: uv run pytest -v -m slow

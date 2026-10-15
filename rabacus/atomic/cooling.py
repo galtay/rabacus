@@ -1,8 +1,8 @@
 """ A module for loading atomic cooling rates. """ 
 
 import numpy as np
-import hui_gnedin_97 
-import sd93
+from . import hui_gnedin_97 
+from . import sd93
 
 from rabacus.utils import utils
 from rabacus.constants import units
@@ -124,8 +124,9 @@ class CoolingRates:
         #------------------------------------------
         if fit_name == 'hg97':
             self._rates = hui_gnedin_97.HuiGnedin97()
-        elif fit_name == 'enzo13':
-            self._rates = enzo_13.Enzo13()
+        else:
+            # an 'enzo13' option was referenced here but never implemented
+            raise utils.InputError('\n fit_name must be "hg97" \n')
         
         # set initial values
         #----------------------------------------------
@@ -236,7 +237,7 @@ class CoolingRates:
         # check temperature 
         #------------------------------------------
         if not hasattr( T, 'shape' ):
-            raise utils.InputError, '\n T must be an array with units. \n'
+            raise utils.InputError('\n T must be an array with units. \n')
 
         if T.shape == ():
             self.T = np.ones(1) * T
@@ -244,7 +245,7 @@ class CoolingRates:
             self.T = T.copy()
 
         if not hasattr(self.T,'units'): 
-            raise utils.NeedUnitsError, '\n T must have units \n'
+            raise utils.NeedUnitsError('\n T must have units \n')
         else:
             self.T.units = 'K'
 
@@ -271,7 +272,7 @@ class CoolingRates:
 
         # check HI photo-heating rate
         #------------------------------------------
-        if H1h == None:
+        if H1h is None:
             self.H1h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if H1h.shape == ():
@@ -280,16 +281,16 @@ class CoolingRates:
                 self.H1h = H1h.copy()
 
             if not hasattr(self.H1h,'units'): 
-                raise utils.NeedUnitsError, '\n H1h must have units \n'
+                raise utils.NeedUnitsError('\n H1h must have units \n')
             else:
                 self.H1h.units = 'erg/s'
 
             if self.H1h.shape != self.T.shape:
-                raise utils.InputError, '\n T and H1h must have same shape \n'
+                raise utils.InputError('\n T and H1h must have same shape \n')
 
         # check HeI photo-heating rate
         #------------------------------------------
-        if He1h == None:
+        if He1h is None:
             self.He1h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if He1h.shape == ():
@@ -298,16 +299,16 @@ class CoolingRates:
                 self.He1h = He1h.copy()
 
             if not hasattr(self.He1h,'units'): 
-                raise utils.NeedUnitsError, '\n He1h must have units \n'
+                raise utils.NeedUnitsError('\n He1h must have units \n')
             else:
                 self.He1h.units = 'erg/s'
 
             if self.He1h.shape != self.T.shape:
-                raise utils.InputError, '\n T and He1h must have same shape \n'
+                raise utils.InputError('\n T and He1h must have same shape \n')
 
         # check HeII photo-heating rate
         #------------------------------------------
-        if He2h == None:
+        if He2h is None:
             self.He2h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if He2h.shape == ():
@@ -316,12 +317,12 @@ class CoolingRates:
                 self.He2h = He2h.copy()
 
             if not hasattr(self.He2h,'units'): 
-                raise utils.NeedUnitsError, '\n He2h must have units \n'
+                raise utils.NeedUnitsError('\n He2h must have units \n')
             else:
                 self.He2h.units = 'erg/s'
 
             if self.He2h.shape != self.T.shape:
-                raise utils.InputError, '\n T and He2h must have same shape \n'
+                raise utils.InputError('\n T and He2h must have same shape \n')
 
 
 
@@ -338,7 +339,7 @@ class CoolingRates:
             if key in self._rate_names:
                 if hasattr( self, key ):
                     rate = getattr( self, key )
-                    newr = np.array( [ rate for i in xrange(N) ] ) * rate.units
+                    newr = np.array( [ rate for i in range(N) ] ) * rate.units
                     setattr( self, key, newr )
 
     def reduce_dims( self ):
@@ -386,11 +387,11 @@ class CoolingRates:
         if not c1:
             msg = '\n nH, nHe, ionization fractions (x.??) and self.T ' + \
                 'must have equal shapes \n'
-            print 'nH.shape: ', nH.shape
-            print 'nHe.shape: ', nHe.shape
-            print 'x.H1.shape: ', x.H1.shape
-            print 'self.T.shape: ', self.T.shape
-            raise utils.InputError, msg
+            print('nH.shape: ', nH.shape)
+            print('nHe.shape: ', nHe.shape)
+            print('x.H1.shape: ', x.H1.shape)
+            print('self.T.shape: ', self.T.shape)
+            raise utils.InputError(msg)
 
 
         ne = nH * x.H2 + nHe * (x.He2 + 2.0 * x.He3)
@@ -413,18 +414,18 @@ class CoolingRates:
 
         # possibly apply hubble cooling
         #-----------------------------------------------
-        if Hz != None:
+        if Hz is not None:
             if not hasattr(Hz,'units'): 
-                raise utils.NeedUnitsError, '\n Hz must have units \n'
+                raise utils.NeedUnitsError('\n Hz must have units \n')
             else:
-                Hz.units = '1/s'
+                Hz = Hz.rescale('1/s')
 
             adia = 3.0 * Hz * self.pc.kb * self.T * ( nH + nHe + ne )
             cool += adia
 
         # possibly apply metal cooling
         #-----------------------------------------------
-        if sd93_logZ != None:
+        if sd93_logZ is not None:
             sd = sd93.SD93()
             Lambda_N = sd.Zcool( self.T, sd93_logZ )
             nt = nH + nHe
@@ -456,11 +457,11 @@ class CoolingRates:
         if not c1:
             msg = '\n nH, nHe, ionization fractions (x.??) and self.T ' + \
                 'must have equal shapes \n'
-            print 'nH.shape: ', nH.shape
-            print 'nHe.shape: ', nHe.shape
-            print 'x.H1.shape: ', x.H1.shape
-            print 'self.T.shape: ', self.T.shape
-            raise utils.InputError, msg
+            print('nH.shape: ', nH.shape)
+            print('nHe.shape: ', nHe.shape)
+            print('x.H1.shape: ', x.H1.shape)
+            print('self.T.shape: ', self.T.shape)
+            raise utils.InputError(msg)
  
         heat = x.H1  * self.H1h  * nH  + \
                x.He1 * self.He1h * nHe + \
