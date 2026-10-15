@@ -97,7 +97,7 @@ class PhotoXsections_Verner96:
 
         Eth = self.Eth[indx]
 
-        Eth.units = 'eV' 
+        Eth = Eth.rescale('eV') 
         return Eth
 
 
@@ -126,7 +126,7 @@ class PhotoXsections_Verner96:
         #--------------------------------------------------------
 
         if hasattr(E,'units'): 
-            E.units = 'eV'
+            E = E.rescale('eV')
         else:
             raise utils.NeedUnitsError('\n Input variable E must have units \n')
 

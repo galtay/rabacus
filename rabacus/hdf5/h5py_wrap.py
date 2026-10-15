@@ -56,7 +56,7 @@ def rd( fname, path, dtype=None ):
     data = None    
     with h5py.File( fname, 'r' ) as h5f:
         ds = h5f[path]
-        if dtype == None:
+        if dtype is None:
             dtype = ds.dtype
         data = np.zeros( ds.shape, dtype=dtype )
         data = ds.value

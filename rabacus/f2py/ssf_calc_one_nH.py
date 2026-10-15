@@ -130,7 +130,7 @@ while ( err > TOL ):
 
     # create slab
     #----------------------------------------
-    LJ.units = 'cm'
+    LJ = LJ.rescale('cm')
     slab.Ledges = np.linspace( 0.0 * ih.U.kpc, LJ, Nl+1 )
     slab.T = np.ones( Nl ) * pcte.T
     slab.nH = np.ones( Nl ) * nH
@@ -174,8 +174,8 @@ while ( err > TOL ):
     mu = Jeans.mu( xH2cen, xHe2cen, xHe3cen )
     LJ = Jeans.L( nH, Tcen, mu ) 
     
-    LJ.units = 'kpc' 
-    LJ_old.units = 'kpc'
+    LJ = LJ.rescale('kpc') 
+    LJ_old = LJ_old.rescale('kpc')
 
     print('Jeans: ')
     print('itr: ', itr)

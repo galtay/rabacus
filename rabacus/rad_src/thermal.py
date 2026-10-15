@@ -31,7 +31,7 @@ class ThermalSpectrum:
         # check input 
         #--------------------------------------------------------
         if hasattr( T_eff, 'units' ):
-            T_eff.units = 'K'
+            T_eff = T_eff.rescale('K')
         else:
             raise utils.NeedUnitsError('\nT_eff must have units of K\n')
 

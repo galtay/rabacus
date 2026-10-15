@@ -46,7 +46,7 @@ class SlabBase(object):
         assert( self.rec_meth == 'fixed' or 
                 self.rec_meth == 'ray' )
 
-        if self.find_Teq and self.z==None:
+        if self.find_Teq and self.z is None:
             msg = 'need to supply redshift if finding equilibrium temperature'
             raise utils.InputError(msg)
 

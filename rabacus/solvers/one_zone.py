@@ -1273,18 +1273,18 @@ class ImplicitIonfracs:
         # check input
         #----------------------------------------------
         if not hasattr(ne,'units'): 
-            raise NeedUnitsError('\n Input variable ne must have units \n')
+            raise utils.NeedUnitsError('\n Input variable ne must have units \n')
 
         if not hasattr(nH,'units'): 
-            raise NeedUnitsError('\n Input variable nH must have units \n')
+            raise utils.NeedUnitsError('\n Input variable nH must have units \n')
 
         if not hasattr(nHe,'units'): 
-            raise NeedUnitsError('\n Input variable nHe must have units \n')
+            raise utils.NeedUnitsError('\n Input variable nHe must have units \n')
 
         msg = '\n ne, nH, nHe, and rates arrays must have the same shape \n'
         if not ne.shape == nH.shape == nHe.shape == kchem.T.shape: 
             print(ne.shape, nH.shape, nHe.shape, kchem.T.shape)
-            raise InputError(msg)
+            raise utils.InputError(msg)
 
 
         # attach input

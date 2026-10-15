@@ -162,7 +162,7 @@ class ChemistryRates:
 
         # check HI photoionization rate
         #------------------------------------------
-        if H1i == None:
+        if H1i is None:
             self.H1i = np.zeros(self.T.shape) / self.u.s
         else:
             if H1i.shape == ():
@@ -181,7 +181,7 @@ class ChemistryRates:
 
         # check HeI photoionization rate
         #------------------------------------------
-        if He1i == None:
+        if He1i is None:
            self.He1i = np.zeros(1) / self.u.s
         else:
             if He1i.shape == ():
@@ -200,7 +200,7 @@ class ChemistryRates:
 
         # check HeII photoionization rate
         #------------------------------------------
-        if He2i == None:
+        if He2i is None:
             self.He2i = np.zeros(1) / self.u.s
         else:
             if He2i.shape == ():
@@ -398,7 +398,7 @@ class CoolingRates:
 
         # check HI photo-heating rate
         #------------------------------------------
-        if H1h == None:
+        if H1h is None:
             self.H1h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if H1h.shape == ():
@@ -416,7 +416,7 @@ class CoolingRates:
 
         # check HeI photo-heating rate
         #------------------------------------------
-        if He1h == None:
+        if He1h is None:
             self.He1h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if He1h.shape == ():
@@ -434,7 +434,7 @@ class CoolingRates:
 
         # check HeII photo-heating rate
         #------------------------------------------
-        if He2h == None:
+        if He2h is None:
             self.He2h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if He2h.shape == ():
@@ -506,11 +506,11 @@ class CoolingRates:
         bfac = nH * x.H2 + nHe * x.He2 + 4.0 * nHe * x.He3
         cool += self.bremss * bfac * ne
 
-        if Hz != None:
+        if Hz is not None:
             if not hasattr(Hz,'units'): 
                 raise utils.NeedUnitsError('\n Hz must have units \n')
             else:
-                Hz.units = '1/s'
+                Hz = Hz.rescale('1/s')
 
             adia = 3.0 * Hz * self.pc.kb * self.T * ( nH + nHe + ne )
             cool += adia

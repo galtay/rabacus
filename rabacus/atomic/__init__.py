@@ -104,11 +104,11 @@ Photoionization Cross Section Examples:
 
 """ 
 
-#from chemistry import *
-#from cooling import *
-#from photo_xsection import *
-#from hydrogen import *
-#from helium import *
+from .chemistry import *
+from .cooling import *
+from .photo_xsection import *
+from .hydrogen import *
+from .helium import *
 
 
 

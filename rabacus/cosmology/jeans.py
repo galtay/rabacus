@@ -75,7 +75,7 @@ class Jeans:
         num = ( 1.0-self.Yp ) * self.fg
         den = nH * self.PC.G * self.PC.m_p 
         t_dyn = np.sqrt( num / den )
-        t_dyn.units = 's'
+        t_dyn = t_dyn.rescale('s')
         return t_dyn
 
 
@@ -90,7 +90,7 @@ class Jeans:
           
         """ 
         cs = np.sqrt( self.gamma * self.PC.kb * T / ( mu * self.PC.m_p ) )
-        cs.units = 'km/s'
+        cs = cs.rescale('km/s')
         return cs
 
 
@@ -108,7 +108,7 @@ class Jeans:
         """ 
         cs = self.cs( T, mu )
         t_sc = L / cs
-        t_sc.units = 's'
+        t_sc = t_sc.rescale('s')
         return t_sc
 
 
@@ -127,7 +127,7 @@ class Jeans:
         cs = self.cs( T, mu )
         t_dyn = self.t_dyn( nH )
         L = cs * t_dyn
-        L.units = 'kpc'
+        L = L.rescale('kpc')
         return L
 
 
@@ -144,5 +144,5 @@ class Jeans:
 
         """ 
         NH = nH * self.L( nH, T, mu )
-        NH.units = 'cm^-2'
+        NH = NH.rescale('cm^-2')
         return NH

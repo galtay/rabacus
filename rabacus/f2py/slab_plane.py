@@ -165,7 +165,7 @@ class SlabPln(SlabBase):
         #-----------------------------------------------
         super(SlabPln, self).__init__()
 
-        if Hz == None:
+        if Hz is None:
             self.Hz = 0.0 / self.U.s
         else:
             self.Hz = Hz
@@ -398,7 +398,7 @@ class Slab2Pln(SlabBase):
         #-----------------------------------------------
         super(Slab2Pln,self).__init__()
 
-        if Hz == None:
+        if Hz is None:
             self.Hz = 0.0 / self.U.s
         else:
             self.Hz = Hz

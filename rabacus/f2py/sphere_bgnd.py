@@ -190,7 +190,7 @@ class SphereBgnd(SphereBase):
         #-----------------------------------------------
         super(SphereBgnd,self).__init__()
 
-        if Hz == None:
+        if Hz is None:
             self.Hz = 0.0 / self.U.s
         else:
             self.Hz = Hz

@@ -124,8 +124,9 @@ class CoolingRates:
         #------------------------------------------
         if fit_name == 'hg97':
             self._rates = hui_gnedin_97.HuiGnedin97()
-        elif fit_name == 'enzo13':
-            self._rates = enzo_13.Enzo13()
+        else:
+            # an 'enzo13' option was referenced here but never implemented
+            raise utils.InputError('\n fit_name must be "hg97" \n')
         
         # set initial values
         #----------------------------------------------
@@ -271,7 +272,7 @@ class CoolingRates:
 
         # check HI photo-heating rate
         #------------------------------------------
-        if H1h == None:
+        if H1h is None:
             self.H1h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if H1h.shape == ():
@@ -289,7 +290,7 @@ class CoolingRates:
 
         # check HeI photo-heating rate
         #------------------------------------------
-        if He1h == None:
+        if He1h is None:
             self.He1h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if He1h.shape == ():
@@ -307,7 +308,7 @@ class CoolingRates:
 
         # check HeII photo-heating rate
         #------------------------------------------
-        if He2h == None:
+        if He2h is None:
             self.He2h = np.zeros(1) * self.u.erg / self.u.s
         else:
             if He2h.shape == ():
@@ -413,18 +414,18 @@ class CoolingRates:
 
         # possibly apply hubble cooling
         #-----------------------------------------------
-        if Hz != None:
+        if Hz is not None:
             if not hasattr(Hz,'units'): 
                 raise utils.NeedUnitsError('\n Hz must have units \n')
             else:
-                Hz.units = '1/s'
+                Hz = Hz.rescale('1/s')
 
             adia = 3.0 * Hz * self.pc.kb * self.T * ( nH + nHe + ne )
             cool += adia
 
         # possibly apply metal cooling
         #-----------------------------------------------
-        if sd93_logZ != None:
+        if sd93_logZ is not None:
             sd = sd93.SD93()
             Lambda_N = sd.Zcool( self.T, sd93_logZ )
             nt = nH + nHe

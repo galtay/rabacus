@@ -330,7 +330,7 @@ class MassFunction:
         """ Power spectrum from `tf` normalized to match sigma8 from 
         `cosmo`. """ 
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
             raise ValueError('\n Input variable k must have units \n')
         Pk = self.tf.Pk_cdm(k)
@@ -351,7 +351,7 @@ class MassFunction:
 
         """ 
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
             raise ValueError('\n Input variable k must have units \n')
         kk = np.array(k)
@@ -380,12 +380,12 @@ class MassFunction:
         """
 
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
             raise ValueError('\n Input variable k must have units \n')
 
         if hasattr(R,'units'): 
-            R.units = 'Mpc/hh'
+            R = R.rescale('Mpc/hh')
         else:
             raise ValueError('\n Input variable R must have units \n')
 
@@ -415,12 +415,12 @@ class MassFunction:
         """
 
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
             raise ValueError('\n Input variable k must have units \n')
 
         if hasattr(R,'units'): 
-            R.units = 'Mpc/hh'
+            R = R.rescale('Mpc/hh')
         else:
             raise ValueError('\n Input variable R must have units \n')
 
@@ -442,7 +442,7 @@ class MassFunction:
         """
 
         if hasattr(R,'units'): 
-            R.units = 'Mpc/hh'
+            R = R.rescale('Mpc/hh')
         else:
             raise ValueError('\n Input variable R must have units \n')
 
@@ -469,12 +469,12 @@ class MassFunction:
         """ 
 
         if hasattr(k,'units'): 
-            k.units = 'hh/Mpc'
+            k = k.rescale('hh/Mpc')
         else:
             raise ValueError('\n Input variable k must have units \n')
 
         if hasattr(R,'units'): 
-            R.units = 'Mpc/hh'
+            R = R.rescale('Mpc/hh')
         else:
             raise ValueError('\n Input variable R must have units \n')
 
@@ -499,7 +499,7 @@ class MassFunction:
 
         """
         if hasattr(R,'units'): 
-            R.units = 'Mpc/hh'
+            R = R.rescale('Mpc/hh')
         else:
             raise ValueError('\n Input variable R must have units \n')
         
@@ -524,7 +524,7 @@ class MassFunction:
 
         """
         if hasattr(R,'units'): 
-            R.units = 'Mpc/hh'
+            R = R.rescale('Mpc/hh')
         else:
             raise ValueError('\n Input variable R must have units \n')
         
@@ -552,7 +552,7 @@ class MassFunction:
         """ 
 
         if hasattr(R,'units'): 
-            R.units = 'Mpc/hh'
+            R = R.rescale('Mpc/hh')
         else:
             raise ValueError('\n Input variable R must have units \n')
 
@@ -601,7 +601,7 @@ class MassFunction:
         """ 
 
         if hasattr(V,'units'): 
-            V.units = 'Mpc^3/hh^3'
+            V = V.rescale('Mpc^3/hh^3')
         else:
             raise ValueError('\n Input variable V must have units \n')
         R = ( (3 * V) / (4 * np.pi) )**(1./3)
@@ -629,7 +629,7 @@ class MassFunction:
         """ 
 
         if hasattr(M,'units'): 
-            M.units = 'Msun/hh'
+            M = M.rescale('Msun/hh')
         else:
             raise ValueError('\n Input variable M must have units \n')
         rho_mean = self.cosmo.rho_crit0 * self.cosmo.OmegaM

@@ -232,7 +232,7 @@ class ChemistryRates:
 
         # check HI photoionization rate
         #------------------------------------------
-        if H1i == None:
+        if H1i is None:
             self.H1i = np.zeros(self.T.shape) / self.U.s
         else:
             if H1i.shape == ():
@@ -251,7 +251,7 @@ class ChemistryRates:
 
         # check HeI photoionization rate
         #------------------------------------------
-        if He1i == None:
+        if He1i is None:
             self.He1i = np.zeros(1) / self.U.s
         else:
             if He1i.shape == ():
@@ -270,7 +270,7 @@ class ChemistryRates:
 
         # check HeII photoionization rate
         #------------------------------------------
-        if He2i == None:
+        if He2i is None:
             self.He2i = np.zeros(1) / self.U.s
         else:
             if He2i.shape == ():
