@@ -26,33 +26,33 @@ class TestAtomicRates(unittest.TestCase):
 
         #---------------------------------------------------------
         err = np.abs( (kchem_py.reH2 / kchem_fc.reH2) - 1.0 )
-        print '\n reH2 max err: ', err.max()
+        print('\n reH2 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kchem_py.reHe2 / kchem_fc.reHe2) - 1.0 )
-        print ' reHe2 max err: ', err.max()
+        print(' reHe2 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kchem_py.reHe3 / kchem_fc.reHe3) - 1.0 )
-        print ' reHe3 max err: ', err.max()
+        print(' reHe3 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         #---------------------------------------------------------
         err = np.abs( (kchem_py.ciH1 / kchem_fc.ciH1) - 1.0 )
-        print ' ciH1 max err: ', err.max()
+        print(' ciH1 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kchem_py.ciHe1 / kchem_fc.ciHe1) - 1.0 )
-        print ' ciHe1 max err: ', err.max()
+        print(' ciHe1 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kchem_py.ciHe2 / kchem_fc.ciHe2) - 1.0 )
-        print ' ciHe2 max err: ', err.max()
+        print(' ciHe2 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
@@ -71,55 +71,55 @@ class TestAtomicRates(unittest.TestCase):
 
         #---------------------------------------------------------
         err = np.abs( (kcool_py.recH2 / kcool_fc.recH2) - 1.0 )
-        print '\n recH2 max err: ', err.max()
+        print('\n recH2 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kcool_py.recHe2 / kcool_fc.recHe2) - 1.0 )
-        print ' recHe2 max err: ', err.max()
+        print(' recHe2 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kcool_py.recHe3 / kcool_fc.recHe3) - 1.0 )
-        print ' recHe3 max err: ', err.max()
+        print(' recHe3 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         #---------------------------------------------------------
         err = np.abs( (kcool_py.cicH1 / kcool_fc.cicH1) - 1.0 )
-        print ' cicH1 max err: ', err.max()
+        print(' cicH1 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kcool_py.cicHe1 / kcool_fc.cicHe1) - 1.0 )
-        print ' cicHe1 max err: ', err.max()
+        print(' cicHe1 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kcool_py.cicHe2 / kcool_fc.cicHe2) - 1.0 )
-        print ' cicHe2 max err: ', err.max()
+        print(' cicHe2 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         #---------------------------------------------------------
         err = np.abs( (kcool_py.cecH1 / kcool_fc.cecH1) - 1.0 )
-        print ' cecH1 max err: ', err.max()
+        print(' cecH1 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kcool_py.cecHe2 / kcool_fc.cecHe2) - 1.0 )
-        print ' cecHe2 max err: ', err.max()
+        print(' cecHe2 max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         #---------------------------------------------------------
         err = np.abs( (kcool_py.bremss / kcool_fc.bremss) - 1.0 )
-        print ' bremss max err: ', err.max()
+        print(' bremss max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 
         err = np.abs( (kcool_py.compton / kcool_fc.compton) - 1.0 )
-        print ' compton max err: ', err.max()
+        print(' compton max err: ', err.max())
         ok = not np.any( err > TOL )
         self.assertTrue( ok )
 

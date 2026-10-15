@@ -4,7 +4,7 @@ provide named routines for H1, He1, and He2.  All access to photoionization
 cross sections should be through this module. """ 
 
 from rabacus.utils import utils
-from verner.photox import verner_photox
+from .verner.photox import verner_photox
 
 
 __all__ = ['PhotoXsections']

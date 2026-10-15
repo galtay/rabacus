@@ -75,23 +75,23 @@ nH_z = Cosmo.nH_critz( z )
 nH = Delta * nH_z
 nHe = nH * Yp / ( 4.0 * (1.0-Yp) )
 
-print 'slab: '
-print 'Delta: ', Delta
-print 'nH: ', nH
-print 'nHe: ', nHe
-print 
+print('slab: ')
+print('Delta: ', Delta)
+print('nH: ', nH)
+print('nHe: ', nHe)
+print() 
 
 
 pcte = ih.f2py.wrap.SolvePCTE( nH, nHe, z, fcA, i_rate_fit, PR )
 
-print 'one zone:'
-print 'xH1: ', pcte.xH1
-print 'xH2: ', pcte.xH2
-print 'xHe1: ', pcte.xHe1
-print 'xHe2: ', pcte.xHe2
-print 'xHe3: ', pcte.xHe3
-print 'T: ', pcte.T
-print 
+print('one zone:')
+print('xH1: ', pcte.xH1)
+print('xH2: ', pcte.xH2)
+print('xHe1: ', pcte.xHe1)
+print('xHe2: ', pcte.xHe2)
+print('xHe3: ', pcte.xHe3)
+print('T: ', pcte.T)
+print() 
 
 
 
@@ -115,10 +115,10 @@ mu = Jeans.mu( pcte.xH2, pcte.xHe2, pcte.xHe3 )
 LJ = Jeans.L( nH, pcte.T, mu ) 
 LJ_old = LJ
 
-print 'Jeans: '
-print 'mu: ', mu
-print 'LJ: ', LJ
-print 
+print('Jeans: ')
+print('mu: ', mu)
+print('LJ: ', LJ)
+print() 
 
 TOL = 1.0e-4
 err = 1.0e20
@@ -141,19 +141,19 @@ while ( err > TOL ):
     #----------------------------------------
     ih.f2py.wrap.SlabPlane( slab, hm12_fc, z )
 
-    Tcen = ( slab.T[Nl/2-1] + slab.T[Nl/2] ) * 0.5
-    xH2cen = ( slab.xH2[Nl/2-1] + slab.xH2[Nl/2] ) * 0.5
-    xHe2cen = ( slab.xHe2[Nl/2-1] + slab.xHe2[Nl/2] ) * 0.5
-    xHe3cen = ( slab.xHe3[Nl/2-1] + slab.xHe3[Nl/2] ) * 0.5
+    Tcen = ( slab.T[Nl//2-1] + slab.T[Nl//2] ) * 0.5
+    xH2cen = ( slab.xH2[Nl//2-1] + slab.xH2[Nl//2] ) * 0.5
+    xHe2cen = ( slab.xHe2[Nl//2-1] + slab.xHe2[Nl//2] ) * 0.5
+    xHe3cen = ( slab.xHe3[Nl//2-1] + slab.xHe3[Nl//2] ) * 0.5
 
-    print 'slab (min/max): '
-    print 'xH1: ', slab.xH1.min(), slab.xH1.max()
-    print 'xH2: ', slab.xH2.min(), slab.xH2.max()
-    print 'xHe1: ', slab.xHe1.min(), slab.xHe1.max()
-    print 'xHe2: ', slab.xHe2.min(), slab.xHe2.max()
-    print 'xHe3: ', slab.xHe3.min(), slab.xHe3.max()
-    print 'T: ', slab.T.min(), slab.T.max()
-    print
+    print('slab (min/max): ')
+    print('xH1: ', slab.xH1.min(), slab.xH1.max())
+    print('xH2: ', slab.xH2.min(), slab.xH2.max())
+    print('xHe1: ', slab.xHe1.min(), slab.xHe1.max())
+    print('xHe2: ', slab.xHe2.min(), slab.xHe2.max())
+    print('xHe3: ', slab.xHe3.min(), slab.xHe3.max())
+    print('T: ', slab.T.min(), slab.T.max())
+    print()
 
     yy = slab.nH * slab.xH1 * slab.T
     num = fc.utils.utils_integrate_trap( slab.Lcen, yy )
@@ -163,13 +163,13 @@ while ( err > TOL ):
     
     TH1 = num/den
     
-    print 'Centered (min/max): '
-    print 'TH1: ', TH1
-    print 'Tcen: ', Tcen
-    print 'xH2cen: ', xH2cen
-    print 'xHe2cen: ', xHe2cen
-    print 'xHe3cen: ', xHe3cen
-    print
+    print('Centered (min/max): ')
+    print('TH1: ', TH1)
+    print('Tcen: ', Tcen)
+    print('xH2cen: ', xH2cen)
+    print('xHe2cen: ', xHe2cen)
+    print('xHe3cen: ', xHe3cen)
+    print()
     
     mu = Jeans.mu( xH2cen, xHe2cen, xHe3cen )
     LJ = Jeans.L( nH, Tcen, mu ) 
@@ -177,12 +177,12 @@ while ( err > TOL ):
     LJ.units = 'kpc' 
     LJ_old.units = 'kpc'
 
-    print 'Jeans: '
-    print 'itr: ', itr
-    print 'mu: ', mu
-    print 'LJ: ', LJ
-    print 'LJ_old: ', LJ_old
-    print 
+    print('Jeans: ')
+    print('itr: ', itr)
+    print('mu: ', mu)
+    print('LJ: ', LJ)
+    print('LJ_old: ', LJ_old)
+    print() 
 
     err = np.abs( 1.0 - LJ / LJ_old )
     itr += 1

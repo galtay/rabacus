@@ -5,7 +5,7 @@ import numpy as np
 from rabacus.constants import physical
 from rabacus.constants import units
 from rabacus.utils import utils
-import photo_xsection
+from . import photo_xsection
 
 __all__ = ['Hydrogen']
 

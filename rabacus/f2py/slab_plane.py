@@ -1,8 +1,8 @@
 """ Wrapper to make the fortran calling identical to the python calling. """ 
 
-import rabacus_fc
+from . import rabacus_fc
 import numpy as np
-from slab_base import SlabBase
+from .slab_base import SlabBase
 from rabacus.constants import units
 from rabacus.utils import utils
 from rabacus.atomic import chemistry

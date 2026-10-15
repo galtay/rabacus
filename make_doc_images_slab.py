@@ -145,7 +145,7 @@ t1 = time.time()
 slabs[key] = ra.SlabPln( Edges, T, nH, nHe, src_mono, 
                            fixed_fcA=0.0, thin=True )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_x( slabs[key], 'slab_' + key + '.png' )
 
 
@@ -161,7 +161,7 @@ t1 = time.time()
 slabs[key] = ra.SlabPln( Edges, T, nH, nHe, src_mono, 
                            fixed_fcA=0.0 )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_analytic( slabs[key], ana, 'slab_analytic.png', )
 
 
@@ -172,7 +172,7 @@ t1 = time.time()
 slabs[key] = ra.SlabPln( Edges, T, nH, nHe, src_hm12, 
                            fixed_fcA=0.0 )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_x( slabs[key], 'slab_' + key + '.png', )
 
 
@@ -183,7 +183,7 @@ t1 = time.time()
 slabs[key] = ra.SlabPln( Edges, T, nH, nHe, src_hm12, 
                            fixed_fcA=0.0, find_Teq=True, z=z )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_x( slabs[key], 'slab_' + key + '.png', )
 plot_slab_T( slabs[key], 'slab_' + key + '.png', )
 
@@ -195,7 +195,7 @@ t1 = time.time()
 slabs[key] = ra.SlabPln( Edges, T, nH, nHe, src_hm12, 
                            rec_meth='ray', find_Teq=True, z=z )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_x( slabs[key], 'slab_' + key + '.png', )
 plot_slab_T( slabs[key], 'slab_' + key + '.png', )
 
@@ -212,7 +212,7 @@ t1 = time.time()
 slabs[key] = ra.Slab2Pln( Edges, T, nH, nHe, src_mono, 
                             fixed_fcA=0.0 )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_x( slabs[key], 'slab_' + key + '.png', )
 
 
@@ -223,7 +223,7 @@ t1 = time.time()
 slabs[key] = ra.Slab2Pln( Edges, T, nH, nHe, src_hm12, 
                             fixed_fcA=0.0 )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_x( slabs[key], 'slab_' + key + '.png', )
 
 
@@ -234,7 +234,7 @@ t1 = time.time()
 slabs[key] = ra.Slab2Pln( Edges, T, nH, nHe, src_hm12, 
                             fixed_fcA=0.0, find_Teq=True, z=z )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_x( slabs[key], 'slab_' + key + '.png', )
 plot_slab_T( slabs[key], 'slab_' + key + '.png', )
 
@@ -246,6 +246,6 @@ t1 = time.time()
 slabs[key] = ra.Slab2Pln( Edges, T, nH, nHe, src_hm12, 
                             rec_meth='ray', find_Teq=True, z=z )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 plot_slab_x( slabs[key], 'slab_' + key + '.png', )
 plot_slab_T( slabs[key], 'slab_' + key + '.png', )

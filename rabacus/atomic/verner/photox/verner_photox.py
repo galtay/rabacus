@@ -73,16 +73,16 @@ class PhotoXsections_Verner96:
         # Make sure input is OK
         #--------------------------------------------------------
         if utils.isiterable( Z ) or not isinstance(Z,int):
-            raise utils.InputError, '\n Z must be an integer scalar'
+            raise utils.InputError('\n Z must be an integer scalar')
 
         if utils.isiterable( N ) or not isinstance(N,int):
-            raise utils.InputError, '\n N must be an integer scalar'
+            raise utils.InputError('\n N must be an integer scalar')
 
         if Z < 1 or Z > 26:
-            raise utils.InputError, '\n We must have 1 <= Z <= 26'
+            raise utils.InputError('\n We must have 1 <= Z <= 26')
 
         if N < 1 or N > Z:
-            raise utils.InputError, '\n We must have 1 <= N <= Z'
+            raise utils.InputError('\n We must have 1 <= N <= Z')
 
 
         # calculate 
@@ -128,19 +128,19 @@ class PhotoXsections_Verner96:
         if hasattr(E,'units'): 
             E.units = 'eV'
         else:
-            raise utils.NeedUnitsError, '\n Input variable E must have units \n'
+            raise utils.NeedUnitsError('\n Input variable E must have units \n')
 
         if utils.isiterable( Z ) or not isinstance(Z,int):
-            raise utils.InputError, '\n Z must be an integer scalar'
+            raise utils.InputError('\n Z must be an integer scalar')
 
         if utils.isiterable( N ) or not isinstance(N,int):
-            raise utils.InputError, '\n N must be an integer scalar'
+            raise utils.InputError('\n N must be an integer scalar')
 
         if Z < 1 or Z > 26:
-            raise utils.InputError, '\n We must have 1 <= Z <= 26'
+            raise utils.InputError('\n We must have 1 <= Z <= 26')
 
         if N < 1 or N > Z:
-            raise utils.InputError, '\n We must have 1 <= N <= Z'
+            raise utils.InputError('\n We must have 1 <= N <= Z')
 
 
         # calculate fit

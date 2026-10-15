@@ -1,11 +1,11 @@
 """ Solves a sphere immersed in a uniform background.   """
 
-import rabacus_fc
+from . import rabacus_fc
 import numpy as np
 from rabacus.atomic import chemistry
 from rabacus.constants import units
 from rabacus.utils import utils
-from sphere_base import SphereBase
+from .sphere_base import SphereBase
 
 __all__ = ['SphereBgnd']
 

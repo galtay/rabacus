@@ -1,8 +1,8 @@
 """ Wrapper to make python calling easy. """ 
 
-import rabacus_fc
+from . import rabacus_fc
 import numpy as np
-from slab_base import SlabBase
+from .slab_base import SlabBase
 from rabacus.constants import units
 from rabacus.utils import utils
 from rabacus.atomic import chemistry

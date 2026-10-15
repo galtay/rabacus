@@ -1,11 +1,11 @@
 """ Solves a sphere with a point source at the center.  Canonical examples
 are Tests 1 and 2 from http://arxiv.org/abs/astro-ph/0603199. """
 
-import rabacus_fc
+from . import rabacus_fc
 import numpy as np
 from rabacus.atomic import chemistry
 from rabacus.constants import units
-from sphere_base import SphereBase
+from .sphere_base import SphereBase
 
 __all__ = ['SphereStromgren']
 

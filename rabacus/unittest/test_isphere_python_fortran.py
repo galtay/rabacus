@@ -91,32 +91,32 @@ class TestIspherePythonFortran(unittest.TestCase):
     def check_spheres(self, sphere_fc, sphere_py):
 
         err = np.abs( 1.0 - sphere_fc.T / sphere_py.T )
-        print 'T max err: ', err.max()
+        print('T max err: ', err.max())
         ok = not np.any( err > T_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - sphere_fc.xH1 / sphere_py.xH1 )
-        print 'xH1 max err: ', err.max()
+        print('xH1 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - sphere_fc.xH2 / sphere_py.xH2 )
-        print 'xH2 max err: ', err.max()
+        print('xH2 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - sphere_fc.xHe1 / sphere_py.xHe1 )
-        print 'xHe1 max err: ', err.max()
+        print('xHe1 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - sphere_fc.xHe2 / sphere_py.xHe2 )
-        print 'xHe2 max err: ', err.max()
+        print('xHe2 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - sphere_fc.xHe3 / sphere_py.xHe3 )
-        print 'xHe3 max err: ', err.max()
+        print('xHe3 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
@@ -132,13 +132,13 @@ class TestIspherePythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 1.5e-2 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran sphere ...'
+        print('\nsolving fortran sphere ...')
         sphere_fc = ra.f2py.IlievSphere( 
             Redges, Tsphere, nH, nHe, mono,
             rec_meth='fixed', fixed_fcA=0.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python sphere ...' 
+            print('solving python sphere ...') 
             sphere_py = ra.solvers.IlievSphere( 
                 Redges, Tsphere, nH, nHe, mono,
                 rec_meth='fixed', fixed_fcA=0.0, tol=1.0e-7 )
@@ -156,13 +156,13 @@ class TestIspherePythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 2.0e-3 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran sphere ...'
+        print('\nsolving fortran sphere ...')
         sphere_fc = ra.f2py.IlievSphere( 
             Redges, Tsphere, nH, nHe, hm12,
             rec_meth='fixed', fixed_fcA=0.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python sphere ...' 
+            print('solving python sphere ...') 
             sphere_py = ra.solvers.IlievSphere( 
                 Redges, Tsphere, nH, nHe, hm12,
                 rec_meth='fixed', fixed_fcA=0.0, tol=1.0e-7 )
@@ -181,13 +181,13 @@ class TestIspherePythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 3.0e-2 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran sphere ...'
+        print('\nsolving fortran sphere ...')
         sphere_fc = ra.f2py.IlievSphere( 
             Redges, Tsphere, nH, nHe, mono, rec_meth='fixed', 
             fixed_fcA=0.0, find_Teq=True, z=3.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python sphere ...' 
+            print('solving python sphere ...') 
             sphere_py = ra.solvers.IlievSphere( 
                 Redges, Tsphere, nH, nHe, mono, rec_meth='fixed', 
                 fixed_fcA=0.0, find_Teq=True, z=3.0, tol=1.0e-7 )
@@ -207,13 +207,13 @@ class TestIspherePythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 2.0e-3 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran sphere ...'
+        print('\nsolving fortran sphere ...')
         sphere_fc = ra.f2py.IlievSphere( 
             Redges, Tsphere, nH, nHe, hm12, rec_meth='fixed', 
             fixed_fcA=0.0, find_Teq=True, z=3.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python sphere ...' 
+            print('solving python sphere ...') 
             sphere_py = ra.solvers.IlievSphere( 
                 Redges, Tsphere, nH, nHe, hm12, rec_meth='fixed', 
                 fixed_fcA=0.0, find_Teq=True, z=3.0, tol=1.0e-7 )
@@ -232,13 +232,13 @@ class TestIspherePythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 2.0e-3 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran sphere ...'
+        print('\nsolving fortran sphere ...')
         sphere_fc = ra.f2py.IlievSphere( 
             Redges, Tsphere, nH, nHe, hm12, rec_meth='thresh', 
             find_Teq=True, z=3.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python sphere ...' 
+            print('solving python sphere ...') 
             sphere_py = ra.solvers.IlievSphere( 
                 Redges, Tsphere, nH, nHe, hm12, rec_meth='thresh', 
                 find_Teq=True, z=3.0, tol=1.0e-7 )

@@ -86,32 +86,32 @@ class TestSlab2PythonFortran(unittest.TestCase):
     def check_slabs(self, slab_fc, slab_py):
 
         err = np.abs( 1.0 - slab_fc.T / slab_py.T )
-        print 'T max err: ', err.max()
+        print('T max err: ', err.max())
         ok = not np.any( err > T_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - slab_fc.xH1 / slab_py.xH1 )
-        print 'xH1 max err: ', err.max()
+        print('xH1 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - slab_fc.xH2 / slab_py.xH2 )
-        print 'xH2 max err: ', err.max()
+        print('xH2 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - slab_fc.xHe1 / slab_py.xHe1 )
-        print 'xHe1 max err: ', err.max()
+        print('xHe1 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - slab_fc.xHe2 / slab_py.xHe2 )
-        print 'xHe2 max err: ', err.max()
+        print('xHe2 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
         err = np.abs( 1.0 - slab_fc.xHe3 / slab_py.xHe3 )
-        print 'xHe3 max err: ', err.max()
+        print('xHe3 max err: ', err.max())
         ok = not np.any( err > X_TOL )
         self.assertTrue( ok )
 
@@ -126,13 +126,13 @@ class TestSlab2PythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 1.5e-2 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran slab ...'
+        print('\nsolving fortran slab ...')
         slab_fc = ra.f2py.SolveSlab2( 
             Ledges, Tslab, nH, nHe, mono,
             rec_meth='fixed', fixed_fcA=0.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python slab ...' 
+            print('solving python slab ...') 
             slab_py = ra.solvers.SolveSlab2( 
                 Ledges, Tslab, nH, nHe, mono,
                 rec_meth='fixed', fixed_fcA=0.0, tol=1.0e-7 )
@@ -151,13 +151,13 @@ class TestSlab2PythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 2.0e-3 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran slab ...'
+        print('\nsolving fortran slab ...')
         slab_fc = ra.f2py.SolveSlab2( 
             Ledges, Tslab, nH, nHe, hm12,
             rec_meth='fixed', fixed_fcA=0.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python slab ...' 
+            print('solving python slab ...') 
             slab_py = ra.solvers.SolveSlab2( 
                 Ledges, Tslab, nH, nHe, hm12,
                 rec_meth='fixed', fixed_fcA=0.0, tol=1.0e-7 )
@@ -176,13 +176,13 @@ class TestSlab2PythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 3.0e-2 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran slab ...'
+        print('\nsolving fortran slab ...')
         slab_fc = ra.f2py.SolveSlab2( 
             Ledges, Tslab, nH, nHe, mono, rec_meth='fixed', 
             fixed_fcA=0.0, find_Teq=True, z=3.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python slab ...' 
+            print('solving python slab ...') 
             slab_py = ra.solvers.SolveSlab2( 
                 Ledges, Tslab, nH, nHe, mono, rec_meth='fixed', 
                 fixed_fcA=0.0, find_Teq=True, z=3.0, tol=1.0e-7 )
@@ -202,13 +202,13 @@ class TestSlab2PythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 2.0e-3 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran slab ...'
+        print('\nsolving fortran slab ...')
         slab_fc = ra.f2py.SolveSlab2( 
             Ledges, Tslab, nH, nHe, hm12, rec_meth='fixed', 
             fixed_fcA=0.0, find_Teq=True, z=3.0, tol=1.0e-7 )
 
         if i_solve_python:
-            print 'solving python slab ...' 
+            print('solving python slab ...') 
             slab_py = ra.solvers.SolveSlab2( 
                 Ledges, Tslab, nH, nHe, hm12, rec_meth='fixed', 
                 fixed_fcA=0.0, find_Teq=True, z=3.0, tol=1.0e-7 )
@@ -227,13 +227,13 @@ class TestSlab2PythonFortran(unittest.TestCase):
         nH = np.ones(Nl) * 2.0e-3 / ra.U.cm**3
         nHe = nH * Yp * 0.25 / (1.0-Yp)
 
-        print '\nsolving fortran slab ...'
+        print('\nsolving fortran slab ...')
         slab_fc = ra.f2py.SolveSlab2( 
             Ledges, Tslab, nH, nHe, hm12, rec_meth='thresh', 
             find_Teq=True, z=3.0, tol=1.0e-8 )
 
         if i_solve_python:
-            print 'solving python slab ...' 
+            print('solving python slab ...') 
             slab_py = ra.solvers.SolveSlab2( 
                 Ledges, Tslab, nH, nHe, hm12, rec_meth='thresh', 
                 find_Teq=True, z=3.0, tol=1.0e-8 )

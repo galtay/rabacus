@@ -1,8 +1,8 @@
 """ A module for loading atomic chemistry rates. """ 
 
 import numpy as np
-import hui_gnedin_97 
-import badnell_06
+from . import hui_gnedin_97 
+from . import badnell_06
 
 from rabacus.utils import utils
 from rabacus.constants import units
@@ -198,7 +198,7 @@ class ChemistryRates:
         # check temperature 
         #------------------------------------------
         if not hasattr( T, 'shape' ):
-            raise utils.InputError, '\n T must be an array with units. \n'
+            raise utils.InputError('\n T must be an array with units. \n')
 
         if T.shape == ():
             self.T = np.ones(1) * T
@@ -206,7 +206,7 @@ class ChemistryRates:
             self.T = T.copy()
 
         if not hasattr(self.T,'units'): 
-            raise utils.NeedUnitsError, '\n T must have units \n'
+            raise utils.NeedUnitsError('\n T must have units \n')
         else:
             self.T.units = 'K'
 
@@ -241,12 +241,12 @@ class ChemistryRates:
                 self.H1i = H1i.copy()
 
             if not hasattr(self.H1i,'units'): 
-                raise utils.NeedUnitsError, '\n H1i must have units \n'
+                raise utils.NeedUnitsError('\n H1i must have units \n')
             else:
                 self.H1i.units = '1/s'
 
             if self.H1i.shape != self.T.shape:
-                raise utils.InputError, '\n T and H1i must have same shape \n'
+                raise utils.InputError('\n T and H1i must have same shape \n')
 
 
         # check HeI photoionization rate
@@ -260,12 +260,12 @@ class ChemistryRates:
                 self.He1i = He1i.copy()
 
             if not hasattr(self.He1i,'units'): 
-                raise utils.NeedUnitsError, '\n He1i must have units \n'
+                raise utils.NeedUnitsError('\n He1i must have units \n')
             else:
                 self.He1i.units = '1/s'
 
             if self.He1i.shape != self.T.shape:
-                raise utils.InputError, '\n T and He1i must have same shape \n'
+                raise utils.InputError('\n T and He1i must have same shape \n')
 
 
         # check HeII photoionization rate
@@ -279,12 +279,12 @@ class ChemistryRates:
                 self.He2i = He2i.copy()
 
             if not hasattr(self.He2i,'units'): 
-                raise utils.NeedUnitsError, '\n He2i must have units \n'
+                raise utils.NeedUnitsError('\n He2i must have units \n')
             else:
                 self.He2i.units = '1/s'
 
             if self.He2i.shape != self.T.shape:
-                raise utils.InputError, '\n T and He2i must have same shape \n'
+                raise utils.InputError('\n T and He2i must have same shape \n')
 
 
 
@@ -302,7 +302,7 @@ class ChemistryRates:
             if key in self._rate_names:
                 if hasattr( self, key ):
                     rate = getattr( self, key )
-                    newr = np.array( [ rate for i in xrange(N) ] ) * rate.units
+                    newr = np.array( [ rate for i in range(N) ] ) * rate.units
                     setattr( self, key, newr )
 
     def reduce_dims( self ):

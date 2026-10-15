@@ -5,13 +5,13 @@ import numpy as np
 from rabacus.utils import utils
 from rabacus.constants import physical
 
-from hm12 import HM12Spectrum
-from thermal import ThermalSpectrum
-from powerlaw import PowerlawSpectrum
-from monochromatic import MonochromaticSpectrum
-from source import Source
+from .hm12 import HM12Spectrum
+from .thermal import ThermalSpectrum
+from .powerlaw import PowerlawSpectrum
+from .monochromatic import MonochromaticSpectrum
+from .source import Source
 
-import species
+from . import species
 
 
 __all__ = ['PlaneSource']
@@ -595,7 +595,7 @@ class PlaneSource(Source):
         """ 
 
         if not hasattr(n,'units'): 
-            raise utils.NeedUnitsError, '\n n must have units, e.g. cm^-3 \n'
+            raise utils.NeedUnitsError('\n n must have units, e.g. cm^-3 \n')
         else:
             n.units = 'cm^-3'
 
@@ -613,7 +613,7 @@ class PlaneSource(Source):
 
         if not hasattr(Fn,'units'):
             msg = '\n Fn must have units, e.g. s^-1 cm^-2 \n'
-            raise utils.NeedUnitsError, msg
+            raise utils.NeedUnitsError(msg)
         else:
             Fn.units = 's^-1 * cm^-2'
 
@@ -630,7 +630,7 @@ class PlaneSource(Source):
         """ 
 
         if not hasattr(H1i,'units'): 
-            raise utils.NeedUnitsError, '\n H1i must have units, e.g. s^-1 \n'
+            raise utils.NeedUnitsError('\n H1i must have units, e.g. s^-1 \n')
         else:
             H1i.units = 's^-1'
 

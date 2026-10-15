@@ -5,7 +5,7 @@ providing units.
 """ 
 
 import quantities as pq
-import physical
+from . import physical
 
 __all__ = ['Units', 'CosmoUnits']
 

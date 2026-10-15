@@ -1,6 +1,6 @@
 """ Wrapper to make the fortran calling identical to the python calling. """ 
 
-import rabacus_fc 
+from . import rabacus_fc
 import numpy as np
 
 from rabacus.atomic import chemistry 
@@ -579,7 +579,7 @@ class Solve_PCTE:
             Hz = 0.0
         else:
             if not hasattr(Hz,'units'): 
-                raise ValueError, '\n Hz must have units \n'
+                raise ValueError('\n Hz must have units \n')
             else:
                 Hz.units = '1/s'
 

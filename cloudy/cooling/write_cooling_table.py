@@ -41,8 +41,8 @@ def write_spectrum_file( z, NH1, NHe1, NHe2, fac=1.0 ):
             f.write('continue ')
             f.write( interpolate_command[i] )
             f.write('\n')
-    logInu_norm = np.log10( 4*np.pi*10**logInu[Nnu/2] )
-    logE_norm = logE[Nnu/2]
+    logInu_norm = np.log10( 4*np.pi*10**logInu[Nnu//2] )
+    logE_norm = logE[Nnu//2]
     if logE_norm > 0.0:
         f.write('f(nu) = ' + str(logInu_norm) + ' at ' + 
                 str(10**logE_norm) + '\n')

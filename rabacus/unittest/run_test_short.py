@@ -3,13 +3,13 @@ runs short time tests.  should complete in less than a few minutes.
 """ 
 
 import unittest
-import test_hm12 
-import test_atomic_rates
-import test_ion_solver
-import test_source_point
-import test_source_plane
-import test_source_background
-import test_slab_analytic
+from . import test_hm12 
+from . import test_atomic_rates
+from . import test_ion_solver
+from . import test_source_point
+from . import test_source_plane
+from . import test_source_background
+from . import test_slab_analytic
 
 
 __all__ = ['run_test_short']

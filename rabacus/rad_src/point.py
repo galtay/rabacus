@@ -4,13 +4,13 @@ import numpy as np
 from rabacus.utils import utils
 from rabacus.constants import physical
 
-from hm12 import HM12Spectrum
-from thermal import ThermalSpectrum
-from powerlaw import PowerlawSpectrum
-from monochromatic import MonochromaticSpectrum
-from source import Source
+from .hm12 import HM12Spectrum
+from .thermal import ThermalSpectrum
+from .powerlaw import PowerlawSpectrum
+from .monochromatic import MonochromaticSpectrum
+from .source import Source
 
-import species
+from . import species
 
 
 __all__ = ['PointSource']
@@ -363,7 +363,7 @@ class PointSource(Source):
     def _dFu_over_dnu( self, r ):
         """ Energy flux per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self.dLu_over_dnu / (4.0 * np.pi * r*r)
         dxdx.units = 'erg/s/Hz/cm^2'
         return dxdx
@@ -371,7 +371,7 @@ class PointSource(Source):
     def _du_over_dnu( self, r ):
         """ Energy density per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFu_over_dnu(r) / self.PC.c
         dxdx.units = 'erg/cm^3/Hz'
         return dxdx
@@ -380,7 +380,7 @@ class PointSource(Source):
     def _dFn_over_dnu( self, r ):
         """ Photon flux per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dLn_over_dnu / (4.0 * np.pi * r*r)
         dxdx.units = '1/s/Hz/cm^2'
         return dxdx
@@ -388,7 +388,7 @@ class PointSource(Source):
     def _dn_over_dnu( self, r ):
         """ Photon density per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFn_over_dnu(r) / self.PC.c
         dxdx.units = '1/cm^3/Hz'
         return dxdx
@@ -397,7 +397,7 @@ class PointSource(Source):
     def _dFu_over_dE( self, r ):
         """ Energy flux per photon energy at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFu_over_dnu(r) / self.PC.h
         dxdx.units = 'erg/s/cm^2/eV'
         return dxdx
@@ -405,7 +405,7 @@ class PointSource(Source):
     def _du_over_dE( self, r ):
         """ Energy density per photon energy at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFu_over_dE(r) / self.PC.c
         dxdx.units = 'erg/cm^3/eV'
         return dxdx
@@ -414,7 +414,7 @@ class PointSource(Source):
     def _dFn_over_dE( self, r ):
         """ Photon flux per photon energy at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFu_over_dnu(r) / ( self.PC.h * self.E )
         dxdx.units = '1/s/cm^2/eV'
         return dxdx
@@ -422,7 +422,7 @@ class PointSource(Source):
     def _dn_over_dE( self, r ):
         """ Photon density per photon energy at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFn_over_dE(r) / self.PC.c
         dxdx.units = '1/cm^3/eV'
         return dxdx
@@ -431,7 +431,7 @@ class PointSource(Source):
     def _dH1i_over_dnu( self, r ):
         """ H1 photoion rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFn_over_dnu(r) * self.sigma.H1
         dxdx.units = '1/s/Hz'
         return dxdx
@@ -439,7 +439,7 @@ class PointSource(Source):
     def _dH1h_over_dnu( self, r ):
         """ H1 photoheat rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dH1i_over_dnu(r) * ( self.E - self.th.E_H1 )
         dxdx.units = 'erg/s/Hz'
         return dxdx
@@ -448,7 +448,7 @@ class PointSource(Source):
     def _dHe1i_over_dnu( self, r ):
         """ He1 photoion rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFn_over_dnu(r) * self.sigma.He1
         dxdx.units = '1/s/Hz'
         return dxdx
@@ -456,7 +456,7 @@ class PointSource(Source):
     def _dHe1h_over_dnu( self, r ):
         """ He1 photoheat rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dHe1i_over_dnu(r) * ( self.E - self.th.E_He1 )
         dxdx.units = 'erg/s/Hz'
         return dxdx
@@ -465,7 +465,7 @@ class PointSource(Source):
     def _dHe2i_over_dnu( self, r ):
         """ He2 photoion rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFn_over_dnu(r) * self.sigma.He2
         dxdx.units = '1/s/Hz'
         return dxdx
@@ -473,7 +473,7 @@ class PointSource(Source):
     def _dHe2h_over_dnu( self, r ):
         """ He2 photoheat rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dHe2i_over_dnu(r) * ( self.E - self.th.E_He2 )
         dxdx.units = 'erg/s/Hz'
         return dxdx
@@ -482,7 +482,7 @@ class PointSource(Source):
     def _dH1i_over_dE( self, r ):
         """ H1 photoion rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFn_over_dE(r) * self.sigma.H1
         dxdx.units = '1/s/eV'
         return dxdx
@@ -490,7 +490,7 @@ class PointSource(Source):
     def _dH1h_over_dE( self, r ):
         """ H1 photoheat rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dH1i_over_dE(r) * ( self.E - self.th.E_H1 )
         dxdx.units = 'erg/s/eV'
         return dxdx
@@ -499,7 +499,7 @@ class PointSource(Source):
     def _dHe1i_over_dE( self, r ):
         """ He1 photoion rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFn_over_dE(r) * self.sigma.He1
         dxdx.units = '1/s/eV'
         return dxdx
@@ -507,7 +507,7 @@ class PointSource(Source):
     def _dHe1h_over_dE( self, r ):
         """ He1 photoheat rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dHe1i_over_dE(r) * ( self.E - self.th.E_He1 )
         dxdx.units = 'erg/s/eV'
         return dxdx
@@ -516,7 +516,7 @@ class PointSource(Source):
     def _dHe2i_over_dE( self, r ):
         """ He2 photoion rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dFn_over_dE(r) * self.sigma.He2
         dxdx.units = '1/s/eV'
         return dxdx
@@ -524,7 +524,7 @@ class PointSource(Source):
     def _dHe2h_over_dE( self, r ):
         """ He2 photoheat rate per frequency at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         dxdx = self._dHe2i_over_dE(r) * ( self.E - self.th.E_He2 )
         dxdx.units = 'erg/s/eV'
         return dxdx
@@ -717,7 +717,7 @@ class PointSource(Source):
           `Ln` (float): target photon luminosity 
         """ 
         if not hasattr(Ln,'units'): 
-            raise utils.NeedUnitsError, '\n n must have units of 1/time \n'
+            raise utils.NeedUnitsError('\n n must have units of 1/time \n')
         else:
             Ln.units = '1/s'
 
@@ -732,7 +732,7 @@ class PointSource(Source):
           `Lu` (float): target energy luminosity 
         """         
         if not hasattr(Lu,'units'): 
-            raise utils.NeedUnitsError, '\n n must have units of energy/time \n'
+            raise utils.NeedUnitsError('\n n must have units of energy/time \n')
         else:
             Lu.units = 'erg/s'
 
@@ -897,7 +897,7 @@ class OpticallyThinQuantities:
     def Fu(self,r):
         """ energy flux at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'        
+            raise utils.NeedUnitsError('\n r must have units \n')        
         if self.rad_src.monochromatic:
             Fu = self.Lu / (4.0 * np.pi * r*r)
         else:
@@ -907,7 +907,7 @@ class OpticallyThinQuantities:
     def u(self,r):
         """ energy density at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'        
+            raise utils.NeedUnitsError('\n r must have units \n')        
         if self.rad_src.monochromatic:
             u = self.Fu(r) / self.PC.c
         else:
@@ -918,7 +918,7 @@ class OpticallyThinQuantities:
     def Fn(self,r):
         """ photon flux at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'      
+            raise utils.NeedUnitsError('\n r must have units \n')      
         if self.rad_src.monochromatic:
             Fn = self.Ln / (4.0 * np.pi * r*r)
         else:
@@ -928,7 +928,7 @@ class OpticallyThinQuantities:
     def n(self,r):
         """ photon density at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         if self.rad_src.monochromatic:
             n = self.Fn(r) / self.PC.c
         else:
@@ -939,7 +939,7 @@ class OpticallyThinQuantities:
     def H1i(self,r):
         """ H1 photoion rate at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'        
+            raise utils.NeedUnitsError('\n r must have units \n')        
         if self.rad_src.monochromatic:
             H1i = self.Fn(r) * self.rad_src.sigma.H1
         else:
@@ -950,7 +950,7 @@ class OpticallyThinQuantities:
     def H1h(self,r):
         """ H1 photoheating rate at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         if self.rad_src.monochromatic:
             H1h = self.H1i(r) * (self.rad_src.E - self.rad_src.th.E_H1) 
         else:
@@ -962,7 +962,7 @@ class OpticallyThinQuantities:
     def He1i(self,r):
         """ He1 photoion rate at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         if self.rad_src.monochromatic:
             He1i = self.Fn(r) * self.rad_src.sigma.He1
         else:
@@ -973,7 +973,7 @@ class OpticallyThinQuantities:
     def He1h(self,r):
         """ He1 photoheating rate at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         if self.rad_src.monochromatic:
             He1h = self.He1i(r) * (self.rad_src.E - self.rad_src.th.E_He1)
         else:
@@ -985,7 +985,7 @@ class OpticallyThinQuantities:
     def He2i(self,r):
         """ He2 photoion rate at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         if self.rad_src.monochromatic:
             He2i = self.Fn(r) * self.rad_src.sigma.He2
         else:
@@ -996,7 +996,7 @@ class OpticallyThinQuantities:
     def He2h(self,r):
         """ He2 photoheating rate at a given radius. """ 
         if not hasattr(r,'units'): 
-            raise utils.NeedUnitsError, '\n r must have units \n'
+            raise utils.NeedUnitsError('\n r must have units \n')
         if self.rad_src.monochromatic:
             He2h = self.He2i(r) * (self.rad_src.E - self.rad_src.th.E_He2)
         else:

@@ -22,6 +22,24 @@ import scipy.interpolate
 __all__ = ['MassFunction']
 
 
+def _romberg( func, a, b, args=(), tol=1.48e-8, rtol=1.48e-8, divmax=10 ):
+    """ Romberg integration of a vectorized function.  Replaces
+    scipy.integrate.romberg (removed in scipy 1.15) with the same
+    convergence criterion: stop when successive estimates differ by less
+    than max(tol, rtol * abs(result)). """
+    prev = None
+    for k in range( 1, divmax + 1 ):
+        n = 2**k
+        x = np.linspace( a, b, n + 1 )
+        y = np.asarray( func( x, *args ), dtype=float )
+        result = scipy.integrate.romb( y, dx=(b - a) / n )
+        if prev is not None and \
+                abs( result - prev ) < max( tol, rtol * abs( result ) ):
+            break
+        prev = result
+    return result
+
+
 
 
 class MassFunction:
@@ -89,8 +107,8 @@ class MassFunction:
             self.dndM[i] = dndM
             self.dndlogM[i] = dndlogM
 
-        print 'attribute dndM now contains dn/dM at z = ', str(z)
-        print 'attribute dndlogM now contains dn/dlogM at z = ', str(z)
+        print('attribute dndM now contains dn/dM at z = ', str(z))
+        print('attribute dndlogM now contains dn/dlogM at z = ', str(z))
 
 
 
@@ -204,7 +222,7 @@ class MassFunction:
             f = A * t1 * np.exp(1.0)**( -c / (sigma*sigma) )
 
         else:
-            print 'fit not recognized'
+            print('fit not recognized')
             sys.exit(1)
 
         return f
@@ -229,11 +247,11 @@ class MassFunction:
         M_min = rho_mean * V_min
         M_max = rho_mean * V_max
 
-        print 'min/max Rw correspond to ... '
-        print 'Rw min/max: ', Rw_min, Rw_max
-        print 'M  min/max: ', M_min, M_max
-        print 'calculating relationship between R and sigma^2'
-        print 'this may take a minute or so ... '
+        print('min/max Rw correspond to ... ')
+        print('Rw min/max: ', Rw_min, Rw_max)
+        print('M  min/max: ', M_min, M_max)
+        print('calculating relationship between R and sigma^2')
+        print('this may take a minute or so ... ')
 
         N = nbins
         dlogRw = ( logRw_max - logRw_min ) / N
@@ -296,7 +314,7 @@ class MassFunction:
 
 
     def delta_cz( self, z ):
-        """ Redshift dependent critical collapse value 
+        r""" Redshift dependent critical collapse value 
 
         Args:
           `z` (real): redshift
@@ -314,7 +332,7 @@ class MassFunction:
         if hasattr(k,'units'): 
             k.units = 'hh/Mpc'
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
         Pk = self.tf.Pk_cdm(k)
         return Pk * self.power_norm * self.D1(z)**2
 
@@ -335,7 +353,7 @@ class MassFunction:
         if hasattr(k,'units'): 
             k.units = 'hh/Mpc'
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
         kk = np.array(k)
         Dk = kk * kk * kk / (2.0 * np.pi * np.pi) * self.Pk(k,z)
         return Dk 
@@ -364,12 +382,12 @@ class MassFunction:
         if hasattr(k,'units'): 
             k.units = 'hh/Mpc'
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
 
         if hasattr(R,'units'): 
             R.units = 'Mpc/hh'
         else:
-            raise ValueError, '\n Input variable R must have units \n'
+            raise ValueError('\n Input variable R must have units \n')
 
         y = k * R
         yi = 1.0 / y
@@ -399,12 +417,12 @@ class MassFunction:
         if hasattr(k,'units'): 
             k.units = 'hh/Mpc'
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
 
         if hasattr(R,'units'): 
             R.units = 'Mpc/hh'
         else:
-            raise ValueError, '\n Input variable R must have units \n'
+            raise ValueError('\n Input variable R must have units \n')
 
         W = self.WkR(k,R)
         W2 = W * W
@@ -426,7 +444,7 @@ class MassFunction:
         if hasattr(R,'units'): 
             R.units = 'Mpc/hh'
         else:
-            raise ValueError, '\n Input variable R must have units \n'
+            raise ValueError('\n Input variable R must have units \n')
 
         kk = np.exp(1.0)**lnk / self.cu.Mpc / self.cu.h
         W2 = self.W2kR( kk, R )
@@ -453,12 +471,12 @@ class MassFunction:
         if hasattr(k,'units'): 
             k.units = 'hh/Mpc'
         else:
-            raise ValueError, '\n Input variable k must have units \n'
+            raise ValueError('\n Input variable k must have units \n')
 
         if hasattr(R,'units'): 
             R.units = 'Mpc/hh'
         else:
-            raise ValueError, '\n Input variable R must have units \n'
+            raise ValueError('\n Input variable R must have units \n')
 
         kk = np.array(k)
         dsdk = self.Delta2k(k,z) * self.W2kR(k,R) / kk
@@ -483,7 +501,7 @@ class MassFunction:
         if hasattr(R,'units'): 
             R.units = 'Mpc/hh'
         else:
-            raise ValueError, '\n Input variable R must have units \n'
+            raise ValueError('\n Input variable R must have units \n')
         
         kk = np.exp(1.0)**lnk / self.cu.Mpc / self.cu.h
         dsdlnk = self.Delta2k(kk,z) * self.W2kR(kk,R)
@@ -508,7 +526,7 @@ class MassFunction:
         if hasattr(R,'units'): 
             R.units = 'Mpc/hh'
         else:
-            raise ValueError, '\n Input variable R must have units \n'
+            raise ValueError('\n Input variable R must have units \n')
         
         kk = 10**logk / self.cu.Mpc / self.cu.h
         dsdlogk = np.log(10.) * self.Delta2k(kk,z) * self.W2kR(kk,R) 
@@ -536,7 +554,7 @@ class MassFunction:
         if hasattr(R,'units'): 
             R.units = 'Mpc/hh'
         else:
-            raise ValueError, '\n Input variable R must have units \n'
+            raise ValueError('\n Input variable R must have units \n')
 
         kw = np.array( 1.0/R )
         lnkw = np.log( kw )
@@ -545,14 +563,12 @@ class MassFunction:
         lnk_max = lnkw + 6.0
 
         if method == 'romberg':
-            sig2 = scipy.integrate.romberg( self.dsig2_dlnk, 
-                                            lnk_min, 
-                                            lnk_max,
-                                            args=(R,z),
-                                            tol=1.0e-12,
-#                                            rtol=1.0e-12,
-                                            divmax=20,
-                                            vec_func=True )
+            sig2 = _romberg( self.dsig2_dlnk, 
+                             lnk_min, 
+                             lnk_max,
+                             args=(R,z),
+                             tol=1.0e-12,
+                             divmax=20 )
 
         elif method == 'quad':
             sig2 = scipy.integrate.quad( self.dsig2_dlnk, 
@@ -587,7 +603,7 @@ class MassFunction:
         if hasattr(V,'units'): 
             V.units = 'Mpc^3/hh^3'
         else:
-            raise ValueError, '\n Input variable V must have units \n'
+            raise ValueError('\n Input variable V must have units \n')
         R = ( (3 * V) / (4 * np.pi) )**(1./3)
         total = self.sigma2_R(R,z)
         return total 
@@ -615,7 +631,7 @@ class MassFunction:
         if hasattr(M,'units'): 
             M.units = 'Msun/hh'
         else:
-            raise ValueError, '\n Input variable M must have units \n'
+            raise ValueError('\n Input variable M must have units \n')
         rho_mean = self.cosmo.rho_crit0 * self.cosmo.OmegaM
         vol = M / rho_mean
         R = ( (3 * vol) / (4 * np.pi) )**(1./3)

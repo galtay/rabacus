@@ -4,7 +4,7 @@ runs python fortran consistancy tests for slab1
 
 import os
 import unittest
-import test_isphere_python_fortran
+from . import test_isphere_python_fortran
 
 
 __all__ = ['run_test_isphere_python_fortran']

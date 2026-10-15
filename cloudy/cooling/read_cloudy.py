@@ -29,7 +29,7 @@ def read_overview_file( fbase, NT ):
         #print line
         if len(line) != 1:
             #print '**', i/2, line[1], line[2]
-            ii = i/2
+            ii = i//2
             tmprtr[ii] = line[1]
             xH1[ii] = line[6]
             xH2[ii] = line[7]
@@ -125,7 +125,7 @@ def read_cooling_file( fbase, NT ):
         #print line
         if len(line) != 1:
             #print '**', i/2, line[1], line[2]
-            ii = i/2
+            ii = i//2
             tmprtr[ii] = line[1]
             ctot[ii] = line[2]
             cH[ii] = line[3]
@@ -181,7 +181,7 @@ def read_heating_file( fbase, NT ):
         #print line
         if len(line) != 1:
             #print '**', i/2, line[1], line[2]
-            ii = i/2
+            ii = i//2
             tmprtr[ii] = line[1]
             htot[ii] = line[2]
             ctot[ii] = line[3]

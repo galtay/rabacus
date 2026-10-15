@@ -1,7 +1,6 @@
 """ I/O routines to read in Plank data """ 
 
 import os as _os
-import string as _string
 import numpy as _np
 
 __all__ = ['PlanckParameters']
@@ -93,20 +92,20 @@ class PlanckParameters:
             if len(pieces) >= 4:
                 if pieces[0].isdigit():
                     self.values[pieces[2]] = _np.float64(pieces[1])
-                    self.latex[pieces[2]]  = _string.join(pieces[3:])
+                    self.latex[pieces[2]]  = ' '.join(pieces[3:])
         f.close()
 
         self.values['h'] = self.values['H0'] / 100.0
         self.latex['h'] = 'h'
 
         self.values['omegab'] = self.values['omegabh2'] / self.values['h']**2
-        self.latex['omegab'] = '\Omega_b'
+        self.latex['omegab'] = r'\Omega_b'
 
         self.values['omegac'] = self.values['omegach2'] / self.values['h']**2
-        self.latex['omegac'] = '\Omega_c'
+        self.latex['omegac'] = r'\Omega_c'
 
         self.values['omegar'] = self.values['omegam'] / (1.0+self.values['zeq'])
-        self.latex['omegar'] = '\Omega_r'
+        self.latex['omegar'] = r'\Omega_r'
 
         # copy yheused into yhe and make alias Yp
         self.values['yhe'] = self.values['yheused']
@@ -117,18 +116,18 @@ class PlanckParameters:
 
 
     def __str__(self):
-        print 'PlanckParameters Instance'
-        print '  data sets: ', self.data_sets
-        print '  OmegaM:  %5.3f' % self.values['omegam']
-        print '  OmegaB:  %5.3f' % self.values['omegab']
-        print '  OmegaC:  %5.3f' % self.values['omegac']
-        print '  OmegaL:  %5.3f' % self.values['omegal']
-        print '  OmegaR:  %5.3f' % self.values['omegar']
-        print '  h:       %5.3f' % self.values['h']
-        print '  sigma_8: %5.3f' % self.values['sigma8']
-        print '  n_s:     %5.3f' % self.values['ns']
-        print '  Y_P:     %5.3f' % self.values['yhe']
-        print 
+        print('PlanckParameters Instance')
+        print('  data sets: ', self.data_sets)
+        print('  OmegaM:  %5.3f' % self.values['omegam'])
+        print('  OmegaB:  %5.3f' % self.values['omegab'])
+        print('  OmegaC:  %5.3f' % self.values['omegac'])
+        print('  OmegaL:  %5.3f' % self.values['omegal'])
+        print('  OmegaR:  %5.3f' % self.values['omegar'])
+        print('  h:       %5.3f' % self.values['h'])
+        print('  sigma_8: %5.3f' % self.values['sigma8'])
+        print('  n_s:     %5.3f' % self.values['ns'])
+        print('  Y_P:     %5.3f' % self.values['yhe'])
+        print() 
         return ''
 
 
@@ -153,96 +152,96 @@ if __name__ == "__main__":
     data_sets = 'base_planck_lowl_lowLike_highL_post_lensing'
     pp_WP_highL_lens = PlanckParameters( data_sets=data_sets )
 
-    print
-    print 'Showing values from Table 2 http://arxiv.org/abs/1303.5076 \n'
+    print()
+    print('Showing values from Table 2 http://arxiv.org/abs/1303.5076 \n')
 
-    print '           [OmegaL, OmegaM, OmegaB, OmegaC, H0,   sigma8, ns]:'
+    print('           [OmegaL, OmegaM, OmegaB, OmegaC, H0,   sigma8, ns]:')
     fs = '%.5f'
 
     pb = pp_base.values
-    print 'Base      :', fs % pb['omegal'], fs % pb['omegam'], \
+    print('Base      :', fs % pb['omegal'], fs % pb['omegam'], \
         fs % pb['omegab'], fs % pb['omegac'], '%.2f' % pb['H0'], \
-        fs % pb['sigma8'], fs % pb['ns']
+        fs % pb['sigma8'], fs % pb['ns'])
 
     p = pp_lens.values
-    print 'Base+lens :', fs % p['omegal'], fs % p['omegam'], \
+    print('Base+lens :', fs % p['omegal'], fs % p['omegam'], \
         fs % p['omegab'], fs % p['omegac'], '%.2f' % p['H0'], \
-        fs % p['sigma8'], fs % p['ns']
+        fs % p['sigma8'], fs % p['ns'])
 
     p = pp_WP.values
-    print 'Base+WP   :', fs % p['omegal'], fs % p['omegam'], \
+    print('Base+WP   :', fs % p['omegal'], fs % p['omegam'], \
         fs % p['omegab'], fs % p['omegac'], '%.2f' % p['H0'], \
-        fs % p['sigma8'], fs % p['ns']
+        fs % p['sigma8'], fs % p['ns'])
 
-    print
-    print 'Showing percent difference from base \n'
+    print()
+    print('Showing percent difference from base \n')
 
     p = pp_lens.values
-    print 'Base+lens :', \
+    print('Base+lens :', \
         fs % ( 100.0*(p['omegal'] - pb['omegal']) / pb['omegal']), \
         fs % ( 100.0*(p['omegam'] - pb['omegam']) / pb['omegam']), \
         fs % ( 100.0*(p['omegab'] - pb['omegab']) / pb['omegab']), \
         fs % ( 100.0*(p['omegac'] - pb['omegac']) / pb['omegac']), \
         fs % ( 100.0*(p['H0'] - pb['H0']) / pb['H0']), \
         fs % ( 100.0*(p['sigma8'] - pb['sigma8']) / pb['sigma8']), \
-        fs % ( 100.0*(p['ns'] - pb['ns']) / pb['ns'])
+        fs % ( 100.0*(p['ns'] - pb['ns']) / pb['ns']))
 
     p = pp_WP.values
-    print 'Base+WP   :', \
+    print('Base+WP   :', \
         fs % ( 100.0*(p['omegal'] - pb['omegal']) / pb['omegal']), \
         fs % ( 100.0*(p['omegam'] - pb['omegam']) / pb['omegam']), \
         fs % ( 100.0*(p['omegab'] - pb['omegab']) / pb['omegab']), \
         fs % ( 100.0*(p['omegac'] - pb['omegac']) / pb['omegac']), \
         fs % ( 100.0*(p['H0'] - pb['H0']) / pb['H0']), \
         fs % ( 100.0*(p['sigma8'] - pb['sigma8']) / pb['sigma8']), \
-        fs % ( 100.0*(p['ns'] - pb['ns']) / pb['ns'])
+        fs % ( 100.0*(p['ns'] - pb['ns']) / pb['ns']))
 
 
 
-    print
-    print
-    print 'Showing values from Table 5 http://arxiv.org/abs/1303.5076 \n'
+    print()
+    print()
+    print('Showing values from Table 5 http://arxiv.org/abs/1303.5076 \n')
 
     pb = pp_base.values
-    print 'Base            :', fs % pb['omegal'], fs % pb['omegam'], \
+    print('Base            :', fs % pb['omegal'], fs % pb['omegam'], \
         fs % pb['omegab'], fs % pb['omegac'], '%.2f' % pb['H0'], \
-        fs % pb['sigma8'], fs % pb['ns']
+        fs % pb['sigma8'], fs % pb['ns'])
 
     p = pp_WP_highL.values
-    print 'Base+WP+hiL     :', fs % p['omegal'], fs % p['omegam'], \
+    print('Base+WP+hiL     :', fs % p['omegal'], fs % p['omegam'], \
         fs % p['omegab'], fs % p['omegac'], '%.2f' % p['H0'], \
-        fs % p['sigma8'], fs % p['ns']
+        fs % p['sigma8'], fs % p['ns'])
 
     p = pp_WP_highL_lens.values
-    print 'Base+WP+hiL+lens:', fs % p['omegal'], fs % p['omegam'], \
+    print('Base+WP+hiL+lens:', fs % p['omegal'], fs % p['omegam'], \
         fs % p['omegab'], fs % p['omegac'], '%.2f' % p['H0'], \
-        fs % p['sigma8'], fs % p['ns']
+        fs % p['sigma8'], fs % p['ns'])
 
-    print
-    print 'Showing percent difference from base \n'
+    print()
+    print('Showing percent difference from base \n')
 
     p = pp_WP_highL.values
-    print 'Base+WP+hiL     :', \
+    print('Base+WP+hiL     :', \
         fs % ( 100.0*(p['omegal'] - pb['omegal']) / pb['omegal']), \
         fs % ( 100.0*(p['omegam'] - pb['omegam']) / pb['omegam']), \
         fs % ( 100.0*(p['omegab'] - pb['omegab']) / pb['omegab']), \
         fs % ( 100.0*(p['omegac'] - pb['omegac']) / pb['omegac']), \
         fs % ( 100.0*(p['H0'] - pb['H0']) / pb['H0']), \
         fs % ( 100.0*(p['sigma8'] - pb['sigma8']) / pb['sigma8']), \
-        fs % ( 100.0*(p['ns'] - pb['ns']) / pb['ns'])
+        fs % ( 100.0*(p['ns'] - pb['ns']) / pb['ns']))
 
     p = pp_WP_highL_lens.values
-    print 'Base+WP+hiL+lens:', \
+    print('Base+WP+hiL+lens:', \
         fs % ( 100.0*(p['omegal'] - pb['omegal']) / pb['omegal']), \
         fs % ( 100.0*(p['omegam'] - pb['omegam']) / pb['omegam']), \
         fs % ( 100.0*(p['omegab'] - pb['omegab']) / pb['omegab']), \
         fs % ( 100.0*(p['omegac'] - pb['omegac']) / pb['omegac']), \
         fs % ( 100.0*(p['H0'] - pb['H0']) / pb['H0']), \
         fs % ( 100.0*(p['sigma8'] - pb['sigma8']) / pb['sigma8']), \
-        fs % ( 100.0*(p['ns'] - pb['ns']) / pb['ns'])
+        fs % ( 100.0*(p['ns'] - pb['ns']) / pb['ns']))
 
 
-    print
+    print()
 
 
 

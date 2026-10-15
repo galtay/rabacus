@@ -1,6 +1,6 @@
 """ Sphere geometry base class. """ 
 
-import rabacus_fc
+from . import rabacus_fc
 import numpy as np
 from rabacus.utils import utils
 from rabacus.constants import units

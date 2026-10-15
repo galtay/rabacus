@@ -38,7 +38,7 @@ t1 = time.time()
 s = ra.f2py.StromgrenSphere( 
     Edges, T, nH, nHe_null, src_mono, fixed_fcA=0.0 )
 t2 = time.time()
-print 'time: ', str(t2-t1)
+print('time: ', str(t2-t1))
 
 
 plt.figure()

@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import pickle
 
-import one_zone as ozn
+from . import one_zone as ozn
 from rabacus.atomic import chemistry
 from rabacus.atomic import cooling
 from rabacus.constants import units
@@ -288,7 +288,7 @@ class Slab2:
         layer Nl-1 as Shi. """ 
 
         if self.verbose:
-            print 'begin initialization'
+            print('begin initialization')
 
         # instantiate atomic rates (optically thin)
         #-----------------------------------------------
@@ -321,12 +321,12 @@ class Slab2:
         self.kcool = kcool 
 
         if self.verbose:
-            print '  created kchem and kcool' 
+            print('  created kchem and kcool') 
 
         # setup arrays
         #-----------------------------------------------
         self.Nl = self.nH.size        
-        self.Nl2 = self.Nl / 2
+        self.Nl2 = self.Nl // 2
         Nl = self.Nl
 
         self.dz = self.Edges[1:] - self.Edges[0:-1]
@@ -370,7 +370,7 @@ class Slab2:
         self.ne = np.zeros(Nl) / self.U.cm**3
 
         if self.verbose:
-            print '  created simple arrays' 
+            print('  created simple arrays') 
 
         # calc NH and NHe between Slo and center of each layer
         #----------------------------------------
@@ -380,13 +380,13 @@ class Slab2:
         self.NH_c = np.zeros(Nl) / self.U.cm**2
         self.NHe_c = np.zeros(Nl) / self.U.cm**2
 
-        for i in xrange(0,Nl):
+        for i in range(0,Nl):
 
             self.NH_c[i] = np.sum( self.dNH[0:i] ) + 0.5 * self.dNH[i]
             self.NHe_c[i] = np.sum( self.dNHe[0:i] ) + 0.5 * self.dNHe[i]
 
         if self.verbose:
-            print '  created NH_c and NHe_c' 
+            print('  created NH_c and NHe_c') 
 
         # calc NH and NHe above and below each layer
         # (does not include contribution from layer)
@@ -397,7 +397,7 @@ class Slab2:
         self.NH_hi = np.zeros(Nl) / self.U.cm**2
         self.NHe_hi = np.zeros(Nl) / self.U.cm**2
 
-        for i in xrange(0,Nl):
+        for i in range(0,Nl):
 
             self.NH_lo[i] = np.sum( self.dNH[0:i] )
             self.NH_hi[i] = np.sum( self.dNH[i+1:Nl] ) 
@@ -439,7 +439,7 @@ class Slab2:
             self.ii_He2 = np.zeros(Nl, dtype=int)
             self.ff_He2 = np.zeros(Nl, dtype=int)
 
-            for i in xrange(Nl):
+            for i in range(Nl):
 
                 self.ii_H1[i],  self.ff_H1[i]  = \
                     self.return_bounds( i, self.L_H1[i] )
@@ -451,11 +451,11 @@ class Slab2:
                     self.return_bounds( i, self.L_He2[i] )
 
             if self.verbose:
-                print '  created index arrays for fcA' 
+                print('  created index arrays for fcA') 
 
 
         if self.verbose:
-            print 'initialization complete' 
+            print('initialization complete') 
 
 
     def return_bounds( self, i, Ltarget ):
@@ -632,18 +632,18 @@ class Slab2:
           `i` (int): layer index
           """ 
 
-        tauH1_th_lo = np.float( self.tauH1_th_lo[i] + \
+        tauH1_th_lo = float( self.tauH1_th_lo[i] + \
                                     0.5 * self.dtauH1_th[i] )
-        tauHe1_th_lo = np.float( self.tauHe1_th_lo[i] + \
+        tauHe1_th_lo = float( self.tauHe1_th_lo[i] + \
                                      0.5 * self.dtauHe1_th[i] )
-        tauHe2_th_lo = np.float( self.tauHe2_th_lo[i] + \
+        tauHe2_th_lo = float( self.tauHe2_th_lo[i] + \
                                      0.5 * self.dtauHe2_th[i] )
 
-        tauH1_th_hi = np.float( self.tauH1_th_hi[i] + \
+        tauH1_th_hi = float( self.tauH1_th_hi[i] + \
                                     0.5 * self.dtauH1_th[i] )
-        tauHe1_th_hi = np.float( self.tauHe1_th_hi[i] + \
+        tauHe1_th_hi = float( self.tauHe1_th_hi[i] + \
                                      0.5 * self.dtauHe1_th[i] )
-        tauHe2_th_hi = np.float( self.tauHe2_th_hi[i] + \
+        tauHe2_th_hi = float( self.tauHe2_th_hi[i] + \
                                      0.5 * self.dtauHe2_th[i] )
 
 
@@ -694,18 +694,18 @@ class Slab2:
           `i` (int): layer index
           """ 
 
-        tauH1_th_lo = np.float( self.tauH1_th_lo[i] + \
+        tauH1_th_lo = float( self.tauH1_th_lo[i] + \
                                     0.5 * self.dtauH1_th[i] )
-        tauHe1_th_lo = np.float( self.tauHe1_th_lo[i] + \
+        tauHe1_th_lo = float( self.tauHe1_th_lo[i] + \
                                      0.5 * self.dtauHe1_th[i] )
-        tauHe2_th_lo = np.float( self.tauHe2_th_lo[i] + \
+        tauHe2_th_lo = float( self.tauHe2_th_lo[i] + \
                                      0.5 * self.dtauHe2_th[i] )
 
-        tauH1_th_hi = np.float( self.tauH1_th_hi[i] + \
+        tauH1_th_hi = float( self.tauH1_th_hi[i] + \
                                     0.5 * self.dtauH1_th[i] )
-        tauHe1_th_hi = np.float( self.tauHe1_th_hi[i] + \
+        tauHe1_th_hi = float( self.tauHe1_th_hi[i] + \
                                      0.5 * self.dtauHe1_th[i] )
-        tauHe2_th_hi = np.float( self.tauHe2_th_hi[i] + \
+        tauHe2_th_hi = float( self.tauHe2_th_hi[i] + \
                                      0.5 * self.dtauHe2_th[i] )
 
         # calculate H1 photo-ionization rate
@@ -750,10 +750,10 @@ class Slab2:
 
         """ Performs one sweep through slab. """ 
 
-        for i in xrange(self.Nl2):
+        for i in range(self.Nl2):
 
             if self.verbose:
-                print 'i = ', i
+                print('i = ', i)
 
 
             # calc tauXX above and below this layer
@@ -910,7 +910,7 @@ class Slab2:
         self.NHe1_c = np.zeros(self.Nl) / self.U.cm**2
         self.NHe2_c = np.zeros(self.Nl) / self.U.cm**2
 
-        for i in xrange(self.Nl):
+        for i in range(self.Nl):
 
             self.NH1_c[i] = np.sum( self.dNH1[0:i] ) + 0.5 * self.dNH1[i]
             self.NHe1_c[i] = np.sum( self.dNHe1[0:i] ) + 0.5 * self.dNHe1[i]

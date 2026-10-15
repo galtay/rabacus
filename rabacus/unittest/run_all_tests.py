@@ -3,17 +3,17 @@ Runs all tests.
 """
 
 import unittest
-import test_hm12 
-import test_atomic_rates
-import test_ion_solver
-import test_source_point
-import test_source_plane
-import test_source_background
-import test_slab_analytic
+from . import test_hm12 
+from . import test_atomic_rates
+from . import test_ion_solver
+from . import test_source_point
+from . import test_source_plane
+from . import test_source_background
+from . import test_slab_analytic
 
-import test_slab1_python_fortran
-import test_slab2_python_fortran
-import test_isphere_python_fortran
+from . import test_slab1_python_fortran
+from . import test_slab2_python_fortran
+from . import test_isphere_python_fortran
 
 
 def run_all_tests():

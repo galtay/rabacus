@@ -108,7 +108,7 @@ class AnalyticSlab:
         if hasattr(E,'units'): 
             E.units = 'eV'
         else:
-            raise utils.NeedUnitsError, '\n Input variable E must have units \n'
+            raise utils.NeedUnitsError('\n Input variable E must have units \n')
 
         self.E = E
         self.PX = photo_xsection.PhotoXsections()

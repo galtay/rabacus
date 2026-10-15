@@ -74,7 +74,7 @@ t1 = time.time()
 spheres[key] = ra.f2py.StromgrenSphere( 
     Edges, T, nH, nHe_null, src_mono, fixed_fcA=0.0 )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 
 plt.figure()
 plt.plot( dat[:,0], dat[:,6], color='blue' )
@@ -95,7 +95,7 @@ t1 = time.time()
 spheres[key] = ra.f2py.StromgrenSphere( 
     Edges, T, nH, nHe_null, src_thrm, find_Teq=True, z=0.0, fixed_fcA=0.0 )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 
 plt.figure()
 plt.plot( dat[:,0], dat[:,6], color='blue' )
@@ -128,7 +128,7 @@ t1 = time.time()
 spheres[key] = ra.f2py.StromgrenSphere( 
     Edges, T, nH, nHe_null, src_mono, fixed_fcA=1.0 )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 
 # radiative transfer case B mono fix T
 #-----------------------------------------------------------------
@@ -139,7 +139,7 @@ t1 = time.time()
 spheres[key] = ra.f2py.StromgrenSphere( 
     Edges, T, nH, nHe_null, src_mono, fixed_fcA=0.0 )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 
 # radiative transfer outward mono fix T
 #-----------------------------------------------------------------
@@ -158,7 +158,7 @@ Edges = np.linspace( 0.0 * ra.U.kpc, Rsphere, Nl+1 )
 spheres[key] = ra.f2py.StromgrenSphere( 
     Edges, T, nH, nHe_null, src_mono, rec_meth='outward' )
 t2 = time.time()
-print key + ' ' + str(t2-t1)
+print(key + ' ' + str(t2-t1))
 
 
 

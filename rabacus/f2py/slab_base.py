@@ -370,7 +370,7 @@ class SlabBase(object):
         # central values
         #================================================
         #================================================
-        Nl2 = self.Nl / 2
+        Nl2 = self.Nl // 2
 
         central = Central() 
 

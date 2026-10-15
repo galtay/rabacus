@@ -9,14 +9,14 @@ from rabacus.constants import units
 from rabacus.hdf5 import h5py_wrap as h5
 from rabacus.utils import units_string
 
-from hm12 import HM12Spectrum
-from thermal import ThermalSpectrum
-from powerlaw import PowerlawSpectrum
-from monochromatic import MonochromaticSpectrum
-from source import Source
+from .hm12 import HM12Spectrum
+from .thermal import ThermalSpectrum
+from .powerlaw import PowerlawSpectrum
+from .monochromatic import MonochromaticSpectrum
+from .source import Source
 
 
-import species
+from . import species
 
 
 __all__ = ['BackgroundSource']
@@ -603,7 +603,7 @@ class BackgroundSource(Source):
         """ 
 
         if not hasattr(n,'units'): 
-            raise utils.NeedUnitsError, '\n n must have units, e.g. cm^-3 \n'
+            raise utils.NeedUnitsError('\n n must have units, e.g. cm^-3 \n')
         else:
             n.units = 'cm^-3'
 
@@ -620,7 +620,7 @@ class BackgroundSource(Source):
         """ 
 
         if not hasattr(H1i,'units'): 
-            raise utils.NeedUnitsError, '\n H1i must have units, e.g. s^-1 \n'
+            raise utils.NeedUnitsError('\n H1i must have units, e.g. s^-1 \n')
         else:
             H1i.units = 's^-1'
 

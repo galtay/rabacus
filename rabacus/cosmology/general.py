@@ -103,8 +103,8 @@ class Cosmology(object):
         #--------------------------------------------------------
         need_keys = ['omegam', 'omegal', 'omegab', 'h', 'sigma8', 'ns', 'Yp']
         for key in need_keys:
-            if not cpdict.has_key( key ):
-                raise InitError, ' key missing from cpdict \n' 
+            if key not in cpdict:
+                raise InitError(' key missing from cpdict \n') 
             
         # transfer input parametrs
         #--------------------------------------------------------
@@ -118,7 +118,7 @@ class Cosmology(object):
 
         self.OmegaC = self.OmegaM - self.OmegaB
 
-        if cpdict.has_key('omegar'):
+        if 'omegar' in cpdict:
             self.OmegaR = cpdict['omegar']
         else:
             # if not provided we use OmegaM and zeq from Planck13 
@@ -132,11 +132,11 @@ class Cosmology(object):
         #--------------------------------------------------------
         err = ( self.OmegaR + self.OmegaM + self.OmegaL ) - 1.0
         if err > 1.0e-3:
-            raise InitError, ' OmegaR + OmegaM + OmegaL must be 1.0 \n' + \
+            raise InitError(' OmegaR + OmegaM + OmegaL must be 1.0 \n' + \
                 ' OmegaR: ' + str(self.OmegaR) + '\n' + \
                 ' OmegaM: ' + str(self.OmegaM) + '\n' + \
                 ' OmegaL: ' + str(self.OmegaL) + '\n' + \
-                ' sum: ' + str(self.OmegaR + self.OmegaM + self.OmegaL) + '\n' 
+                ' sum: ' + str(self.OmegaR + self.OmegaM + self.OmegaL) + '\n') 
 
 
         # create physical constants and cosmological units 
@@ -552,7 +552,7 @@ class Cosmology(object):
         """
         if utils.isiterable(z1) and utils.isiterable(z2):
             if not len(z1) == len(z2):
-                raise utils.InputError, "len(z1) /= len(z2)"
+                raise utils.InputError("len(z1) /= len(z2)")
         Dc1 = self.Dcz(z1)
         Dc2 = self.Dcz(z2)
         Dc = Dc2 - Dc1
@@ -699,20 +699,20 @@ class Cosmology(object):
 
 
     def __str__(self):
-        print 'Cosmology instance'
-        print '  OmegaR:  %5.3f' % self.OmegaR
-        print '  OmegaM:  %5.3f' % self.OmegaM
-        print '  OmegaB:  %5.3f' % self.OmegaB
-        print '  OmegaC:  %5.3f' % self.OmegaC
-        print '  OmegaL:  %5.3f' % self.OmegaL
-        print '  h:       %5.3f' % self.h
-        print '  sigma_8: %5.3f' % self.sigma8
-        print '  n_s:     %5.3f' % self.ns
-        print '  Y_P:     %5.3f' % self.Yp
-        print 
-        print '  H0: ', self.H0
-        print '  dH: ', self.dH0
-        print '  tH: ', self.tH0
-        print '  rho_crit_0: ', self.rho_crit0
-        print '  eps_crit_0: ', self.eps_crit0
+        print('Cosmology instance')
+        print('  OmegaR:  %5.3f' % self.OmegaR)
+        print('  OmegaM:  %5.3f' % self.OmegaM)
+        print('  OmegaB:  %5.3f' % self.OmegaB)
+        print('  OmegaC:  %5.3f' % self.OmegaC)
+        print('  OmegaL:  %5.3f' % self.OmegaL)
+        print('  h:       %5.3f' % self.h)
+        print('  sigma_8: %5.3f' % self.sigma8)
+        print('  n_s:     %5.3f' % self.ns)
+        print('  Y_P:     %5.3f' % self.Yp)
+        print() 
+        print('  H0: ', self.H0)
+        print('  dH: ', self.dH0)
+        print('  tH: ', self.tH0)
+        print('  rho_crit_0: ', self.rho_crit0)
+        print('  eps_crit_0: ', self.eps_crit0)
         return ''

@@ -93,7 +93,7 @@ class NIST_ASD:
 
         """
 
-        for k,v in self._IonizationEnergies.items():
+        for k,v in list(self._IonizationEnergies.items()):
             v.units = unit
             self._IonizationEnergies[k] = v
 
