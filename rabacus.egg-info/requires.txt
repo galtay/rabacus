@@ -1,3 +1,0 @@
-quantities
-scipy
-h5py
