@@ -1,0 +1,51 @@
+[build-system]
+build-backend = "mesonpy"
+requires = ["meson-python>=0.17", "numpy>=2.0"]
+
+[project]
+name = "rabacus"
+version = "0.10.0"
+description = "Calculates analytic cosmological radiative transfer solutions in simplified geometries."
+readme = "README.rst"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Gabriel Altay", email = "gabriel.altay@gmail.com" }]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "quantities>=0.16",
+    "h5py>=3.10",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Fortran",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Intended Audience :: Science/Research",
+    "Development Status :: 4 - Beta",
+]
+
+[project.urls]
+Repository = "https://github.com/galtay/rabacus"
+
+[dependency-groups]
+dev = [
+    # Build requirements, needed in the environment because rabacus is
+    # built without isolation (see [tool.uv] below).
+    "meson-python>=0.17",
+    "meson>=1.3",
+    "ninja",
+    "pytest>=8",
+    "matplotlib>=3.8",
+    "ruff>=0.6",
+]
+
+[tool.uv]
+# meson-python editable installs rebuild the extension on import, so the
+# build tools must live in the project environment rather than in a
+# temporary isolated build environment.
+no-build-isolation-package = ["rabacus"]
