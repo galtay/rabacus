@@ -25,6 +25,13 @@ z = 3.0
 nH_val = 1.0e-2
 y_He = 10**(-1.0701)  # He/H by number in Cloudy's GASS10 abundances
 
+# Cloudy is given the spectrum at 100 energies (write_cooling_table.py) and
+# interpolates it on a fine mesh.  rabacus integrates rates with the
+# trapezoid rule on its own energy samples, which overestimates the H I
+# photoionization rate by ~40% with 100 samples over this range, so the
+# rates are computed from a finely sampled spectrum instead.
+NNU_RATES = 5000
+
 # Cloudy model name -> (spectrum scale factor, NH1, NHe1, NHe2 [cm^-2])
 # as set up in write_cooling_table.py
 MODELS = {
@@ -48,7 +55,7 @@ def read_cloudy_model(fbase):
 
 def photo_rates(fac, NH1, NHe1, NHe2):
     """HM12 photoionization and heating rates behind the given columns."""
-    uvb = ra.BackgroundSource(1.0e-2, 1.0e6, "hm12", z=z, Nnu=100)
+    uvb = ra.BackgroundSource(1.0e-2, 1.0e6, "hm12", z=z, Nnu=NNU_RATES)
     uvb.scale_spectrum(fac)
     if NH1 == NHe1 == NHe2 == 0.0:
         t = uvb.thin

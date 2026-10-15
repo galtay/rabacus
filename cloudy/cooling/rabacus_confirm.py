@@ -3,7 +3,7 @@ import pylab as plt
 import numpy as np
 
 z = 3.0
-Nnu = 100
+Nnu = 5000  # rates are not converged with ~100 samples over q_min - q_max
 q_min = 1.0e-2
 q_max = 1.0e6
 uvb = ra.BackgroundSource( q_min, q_max, 'hm12', z=z, Nnu=Nnu )
