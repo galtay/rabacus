@@ -27,3 +27,4 @@ cloudy/cooling/*_ce.in
 cloudy/cooling/*_pce*.in
 cloudy/cooling/grid*
 cloudy/cooling/*.png
+cloudy/build/
