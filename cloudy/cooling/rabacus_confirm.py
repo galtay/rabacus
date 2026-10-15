@@ -47,3 +47,5 @@ plt.loglog( T, heat, color='black', lw=2.0 )
 plt.loglog( T, heat_H1 )
 plt.loglog( T, heat_He1 )
 plt.loglog( T, heat_He2 )
+
+plt.savefig( 'rabacus_heating.png' )

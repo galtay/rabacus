@@ -58,8 +58,8 @@ def read_continuum_file( fbase ):
         break_check=line[0]
         line_bits = line.split()
         if break_check != '#':
-            E_list.append( np.float(line_bits[0]) )
-            I_list.append( np.float(line_bits[1]) )
+            E_list.append( float(line_bits[0]) )
+            I_list.append( float(line_bits[1]) )
         #print line.split()
 
     E_Ry = np.array( E_list )
@@ -189,15 +189,15 @@ def read_heating_file( fbase, NT ):
             for i,entry in enumerate(line):
 
                 if entry == 'H  1':
-                    hH1[ii] = np.float(line[i+1]) * htot[ii]
+                    hH1[ii] = float(line[i+1]) * htot[ii]
                 if entry == 'He 1':
-                    hHe1[ii] = np.float(line[i+1]) * htot[ii]
+                    hHe1[ii] = float(line[i+1]) * htot[ii]
                 if entry == 'He 2':
-                    hHe2[ii] = np.float(line[i+1]) * htot[ii]
+                    hHe2[ii] = float(line[i+1]) * htot[ii]
 
-                #hH1[ii] = np.float(line[5]) * htot[ii]
-                #hHe1[ii] = np.float(line[7]) * htot[ii]
-                #hHe2[ii] = np.float(line[9]) * htot[ii]
+                #hH1[ii] = float(line[5]) * htot[ii]
+                #hHe1[ii] = float(line[7]) * htot[ii]
+                #hHe2[ii] = float(line[9]) * htot[ii]
 
     return tmprtr, htot, ctot, hH1, hHe1, hHe2
 
@@ -449,3 +449,4 @@ ax2.text( xtxt, ytxt, 'solar - HM12', horizontalalignment='left',
 ax1.legend(ncol=3, fontsize=12)
 ax4.legend(ncol=2, fontsize=12, loc='lower left')
 plt.tight_layout()
+plt.savefig( 'cloudy_cooling.png' )

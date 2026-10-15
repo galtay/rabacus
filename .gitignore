@@ -11,3 +11,19 @@ dist/
 .ruff_cache/
 doc/_build/
 rabacus_test_suite_png/
+
+# Cloudy runs (see cloudy/)
+cloudy/**/*.out
+cloudy/**/*.ovr
+cloudy/**/*.cnt
+cloudy/**/*.con
+cloudy/**/*.cool
+cloudy/**/*.heat
+cloudy/**/*.grain
+cloudy/**/*.grd
+cloudy/png/
+cloudy/cooling/spectrum.ini
+cloudy/cooling/*_ce.in
+cloudy/cooling/*_pce*.in
+cloudy/cooling/grid*
+cloudy/cooling/*.png

@@ -1,1 +1,8 @@
-$HOME/Downloads/Software/c13.03/source/cloudy.exe $1
+#!/bin/sh
+# Run Cloudy on one of the input files in this directory, e.g.
+#
+#   CLOUDY_EXE=/path/to/c13.05/source/cloudy.exe ./run iliev_test_1
+#
+# reads iliev_test_1.in and writes iliev_test_1.out (plus the files
+# requested by "save" commands).
+"${CLOUDY_EXE:?set CLOUDY_EXE to the path of cloudy.exe}" -p "$1"
