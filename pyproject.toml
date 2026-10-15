@@ -49,3 +49,10 @@ dev = [
 # build tools must live in the project environment rather than in a
 # temporary isolated build environment.
 no-build-isolation-package = ["rabacus"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not slow'"
+markers = [
+    "slow: long-running Python vs. Fortran solver comparisons (run with -m slow)",
+]

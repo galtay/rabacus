@@ -10,3 +10,4 @@ dist/
 .pytest_cache/
 .ruff_cache/
 doc/_build/
+rabacus_test_suite_png/

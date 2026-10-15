@@ -16,7 +16,7 @@ class TestAtomicRates(unittest.TestCase):
     def test_chem(self):
         """ test kchem """ 
         N = 128
-        T = np.linspace( 1.0e4, 1.0e5, N ) * ra.U.K
+        T = np.linspace( 1.0e4, 1.0e5, N ) * ra.u.K
         fcA_H2 = np.ones(N) * 1.0
         fcA_He2 = np.ones(N) * 1.0
         fcA_He3 = np.ones(N) * 1.0
@@ -61,7 +61,7 @@ class TestAtomicRates(unittest.TestCase):
     def test_cool(self):
         """ test kcool """ 
         N = 128
-        T = np.linspace( 1.0e4, 1.0e5, N ) * ra.U.K
+        T = np.linspace( 1.0e4, 1.0e5, N ) * ra.u.K
         fcA_H2 = np.ones(N) * 1.0
         fcA_He2 = np.ones(N) * 1.0
         fcA_He3 = np.ones(N) * 1.0

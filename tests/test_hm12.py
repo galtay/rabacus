@@ -8,11 +8,11 @@ import rabacus as ra
 
 
 
-H1i_z0p00 = 0.228e-13 / ra.U.s
-H1h_z0p00 = 0.889e-13 * ra.U.eV / ra.U.s
+H1i_z0p00 = 0.228e-13 / ra.u.s
+H1h_z0p00 = 0.889e-13 * ra.u.eV / ra.u.s
 
-He2i_z15p10 = 0.192e-22 / ra.U.s
-He2h_z15p10 = 0.154e-19 * ra.U.eV / ra.U.s
+He2i_z15p10 = 0.192e-22 / ra.u.s
+He2h_z15p10 = 0.154e-19 * ra.u.eV / ra.u.s
 
 
 class TestHM12(unittest.TestCase):
@@ -50,7 +50,7 @@ class TestHM12(unittest.TestCase):
         # the table
         #---------------------------------------------------
         E_min = 13.6 
-        four_pi_sr = 4 * np.pi * ra.U.sr
+        four_pi_sr = 4 * np.pi * ra.u.sr
 
         for z in prt.z:
 
@@ -58,13 +58,13 @@ class TestHM12(unittest.TestCase):
                 E_max = E_min * 400
                 Npts = 2048
                 log_E = np.linspace( np.log10(E_min), np.log10(E_max), Npts )
-                E = 10**log_E * ra.U.eV
+                E = 10**log_E * ra.u.eV
                 TOL = 5.0e-2
             elif z >= 8.75: 
                 E_max = E_min * 1000
                 Npts = 8192
                 log_E = np.linspace( np.log10(E_min), np.log10(E_max), Npts )
-                E = 10**log_E * ra.U.eV
+                E = 10**log_E * ra.u.eV
                 TOL = 1.5e-1
 
             # create spectrum
@@ -78,7 +78,7 @@ class TestHM12(unittest.TestCase):
             dFu_dnu = four_pi_sr * Inu
 
             # photon flux per unit energy 
-            dFn_dE = dFu_dnu / ( ra.PC.h * E )
+            dFn_dE = dFu_dnu / ( ra.pc.h * E )
 
 
             # test photo-ionization rates

@@ -16,7 +16,7 @@ class TestSourcePoint(unittest.TestCase):
         q_min = 1.0; q_max = 4.0e2; st='hm12'; z=3.0
         hm12 = ra.rad_src.PointSource( q_min, q_max, st, z=z )
 
-        q_min = 1.0; q_max = 5.0; st='thermal'; T_eff=1.0e5 * ra.U.K
+        q_min = 1.0; q_max = 5.0; st='thermal'; T_eff=1.0e5 * ra.u.K
         t1e5 = ra.rad_src.PointSource( q_min, q_max, st, T_eff=T_eff )
 
         q_min = 1.0; q_max = 5.0; st='powerlaw'; alpha=-1.0
@@ -32,7 +32,7 @@ class TestSourcePoint(unittest.TestCase):
         """ call all functions """ 
 
         tauH1_th = tauHe1_th = tauHe2_th = 1.0e1
-        r = 1.0 * ra.U.kpc
+        r = 1.0 * ra.u.kpc
 
         # for polychromatic
         #----------------------------------------------------------
@@ -46,8 +46,8 @@ class TestSourcePoint(unittest.TestCase):
         He2i = hm12.shld_He2i( r, tauH1_th, tauHe1_th, tauHe2_th )
         He2h = hm12.shld_He2h( r, tauH1_th, tauHe1_th, tauHe2_th )
 
-        hm12.normalize_Ln( 5.0e48 / ra.U.s )
-        hm12.normalize_Lu( 1.0e38 * ra.U.erg / ra.U.s )
+        hm12.normalize_Ln( 5.0e48 / ra.u.s )
+        hm12.normalize_Lu( 1.0e38 * ra.u.erg / ra.u.s )
 
         # for monochromatic
         #----------------------------------------------------------
@@ -61,8 +61,8 @@ class TestSourcePoint(unittest.TestCase):
         He2i = mono.shld_He2i( r, tauH1_th, tauHe1_th, tauHe2_th )
         He2h = mono.shld_He2h( r, tauH1_th, tauHe1_th, tauHe2_th )
 
-        mono.normalize_Ln( 5.0e48 / ra.U.s )
-        mono.normalize_Lu( 1.0e38 * ra.U.erg / ra.U.s )
+        mono.normalize_Ln( 5.0e48 / ra.u.s )
+        mono.normalize_Lu( 1.0e38 * ra.u.erg / ra.u.s )
 
         self.assertTrue( True )
 

@@ -1,4 +1,4 @@
-""" Test the uniform background radiation source. """ 
+""" Test the plane parallel radiation source. """ 
 
 import sys
 import pylab as plt
@@ -9,21 +9,21 @@ import unittest
 
 
 
-class TestSourceBackground(unittest.TestCase):
+class TestSourcePlane(unittest.TestCase):
 
     def test_creation(self):
         """ create each spectral type """ 
         q_min = 1.0; q_max = 4.0e2; st='hm12'; z=3.0
-        hm12 = ra.rad_src.BackgroundSource( q_min, q_max, st, z=z )
+        hm12 = ra.rad_src.PlaneSource( q_min, q_max, st, z=z )
 
-        q_min = 1.0; q_max = 5.0; st='thermal'; T_eff=1.0e5 * ra.U.K
-        t1e5 = ra.rad_src.BackgroundSource( q_min, q_max, st, T_eff=T_eff )
+        q_min = 1.0; q_max = 5.0; st='thermal'; T_eff=1.0e5 * ra.u.K
+        t1e5 = ra.rad_src.PlaneSource( q_min, q_max, st, T_eff=T_eff )
 
         q_min = 1.0; q_max = 5.0; st='powerlaw'; alpha=-1.0
-        p1p0 = ra.rad_src.BackgroundSource( q_min, q_max, st, alpha=alpha )
+        p1p0 = ra.rad_src.PlaneSource( q_min, q_max, st, alpha=alpha )
 
         q_min = 5.0; q_max = 5.0; st='monochromatic'
-        mono = ra.rad_src.BackgroundSource( q_min, q_max, st )
+        mono = ra.rad_src.PlaneSource( q_min, q_max, st )
 
         self.assertTrue( True )
 
@@ -36,7 +36,7 @@ class TestSourceBackground(unittest.TestCase):
         # for polychromatic
         #----------------------------------------------------------
         q_min = 1.0; q_max = 4.0e2; st='hm12'; z=3.0
-        hm12 = ra.rad_src.BackgroundSource( q_min, q_max, st, z=z )
+        hm12 = ra.rad_src.PlaneSource( q_min, q_max, st, z=z )
 
         H1i = hm12.shld_H1i( tauH1_th, tauHe1_th, tauHe2_th )
         H1h = hm12.shld_H1h( tauH1_th, tauHe1_th, tauHe2_th )
@@ -45,13 +45,13 @@ class TestSourceBackground(unittest.TestCase):
         He2i = hm12.shld_He2i( tauH1_th, tauHe1_th, tauHe2_th )
         He2h = hm12.shld_He2h( tauH1_th, tauHe1_th, tauHe2_th )
 
-        hm12.normalize_n( 1.0e4 / ra.U.cm**3 )
-        hm12.normalize_H1i( 1.0e-12 / ra.U.s )
+        hm12.normalize_n( 1.0e4 / ra.u.cm**3 )
+        hm12.normalize_H1i( 1.0e-12 / ra.u.s )
 
         # for monochromatic
         #----------------------------------------------------------
         q_min = 1.0; q_max = 1.0; st='monochromatic'
-        mono = ra.rad_src.BackgroundSource( q_min, q_max, st )
+        mono = ra.rad_src.PlaneSource( q_min, q_max, st )
 
         H1i = mono.shld_H1i( tauH1_th, tauHe1_th, tauHe2_th )
         H1h = mono.shld_H1h( tauH1_th, tauHe1_th, tauHe2_th )
@@ -60,14 +60,14 @@ class TestSourceBackground(unittest.TestCase):
         He2i = mono.shld_He2i( tauH1_th, tauHe1_th, tauHe2_th )
         He2h = mono.shld_He2h( tauH1_th, tauHe1_th, tauHe2_th )
 
-        mono.normalize_n( 1.0e4 / ra.U.cm**3 )
-        mono.normalize_H1i( 1.0e-12 / ra.U.s )
+        mono.normalize_n( 1.0e4 / ra.u.cm**3 )
+        mono.normalize_H1i( 1.0e-12 / ra.u.s )
 
         self.assertTrue( True )
 
 
 
-suite = unittest.TestLoader().loadTestsFromTestCase(TestSourceBackground)
+suite = unittest.TestLoader().loadTestsFromTestCase(TestSourcePlane)
 
 
 

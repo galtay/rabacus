@@ -3,6 +3,7 @@
 import sys
 import time
 import numpy as np
+import scipy.interpolate
 import pylab as plt
 import rabacus as ra
 
@@ -24,8 +25,8 @@ class TestSlabAnalytic(unittest.TestCase):
 
         # Calculate an analytic monochromatic solution
         #-----------------------------------------------------
-        nH = 1.5e-3 / ra.U.cm**3
-        T = np.ones(1) * 1.0e4 * ra.U.K
+        nH = 1.5e-3 / ra.u.cm**3
+        T = np.ones(1) * 1.0e4 * ra.u.K
         H1i = np.ones(1) * hm12.thin.H1i
         y = 0.0
 
@@ -49,9 +50,9 @@ class TestSlabAnalytic(unittest.TestCase):
         Tslab = np.ones(Nl) * T
 
         Lslab = ana.Lslab * 1.1
-        Ledges = np.linspace( 0.0 * ra.U.kpc, Lslab, Nl+1 )
+        Ledges = np.linspace( 0.0 * ra.u.kpc, Lslab.rescale("kpc"), Nl+1 )
 
-        slab = ra.f2py.SolveSlab( Ledges, Tslab, nH, nHe, mono,
+        slab = ra.f2py.SlabPln( Ledges, Tslab, nH, nHe, mono,
                                   rec_meth='fixed', fixed_fcA=1.0 )
         
         # make interpolating function for slab solution
@@ -59,7 +60,7 @@ class TestSlabAnalytic(unittest.TestCase):
         ana.L.units = 'kpc'
         slab.z_c.units = 'kpc'
 
-        fit = ra.scipy.interp1d( slab.z_c, np.log10(slab.xH1) )
+        fit = scipy.interpolate.interp1d( slab.z_c, np.log10(slab.xH1) )
 
         # evaluate fit at analytic solution points
         # assert that the errors between the analytic
