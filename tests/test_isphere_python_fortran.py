@@ -210,33 +210,6 @@ class TestIspherePythonFortran(unittest.TestCase):
             self.check_spheres( sphere_fc, sphere_py )         
 
 
-    @pytest.mark.skip(reason="Fortran solvers no longer implement rec_meth='thresh'")
-    def test_isphere_py_fort_poly_thresh_pcte(self):
-        """ test isphere_python_fortran_poly_thresh_pcte """ 
-
-        # set densities 
-        #-----------------------------------------------------
-        nH = np.ones(Nl) * 2.0e-3 / ra.u.cm**3
-        nHe = nH * Yp * 0.25 / (1.0-Yp)
-
-        print('\nsolving fortran sphere ...')
-        sphere_fc = ra.f2py.SphereStromgren( 
-            Redges, Tsphere, nH, nHe, hm12, rec_meth='thresh', 
-            find_Teq=True, z=3.0, tol=1.0e-7 )
-
-        if i_solve_python:
-            print('solving python sphere ...') 
-            sphere_py = ra.solvers.IlievSphere( 
-                Redges, Tsphere, nH, nHe, hm12, rec_meth='thresh', 
-                find_Teq=True, z=3.0, tol=1.0e-7 )
-
-        make_r_plot( sphere_fc, 'isphere_poly_thresh_pcte_x.png' )
-        make_t_plot( sphere_fc, 'isphere_poly_thresh_pcte_t.png' )
-        if i_solve_python:
-            self.check_spheres( sphere_fc, sphere_py )         
-
-
-
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestIspherePythonFortran)
 

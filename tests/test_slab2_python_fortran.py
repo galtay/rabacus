@@ -206,34 +206,6 @@ class TestSlab2PythonFortran(unittest.TestCase):
             self.check_slabs( slab_fc, slab_py )         
 
 
-    @pytest.mark.skip(reason="Fortran solvers no longer implement rec_meth='thresh'")
-    def test_slab_2_py_fort_poly_thresh_pcte(self):
-        """ test slab_2_python_fortran_poly_thresh_pcte """ 
-
-        # set densities 
-        #-----------------------------------------------------
-        nH = np.ones(Nl) * 2.0e-3 / ra.u.cm**3
-        nHe = nH * Yp * 0.25 / (1.0-Yp)
-
-        print('\nsolving fortran slab ...')
-        slab_fc = ra.f2py.Slab2Pln( 
-            Ledges, Tslab, nH, nHe, hm12, rec_meth='thresh', 
-            find_Teq=True, z=3.0, tol=1.0e-8 )
-
-        if i_solve_python:
-            print('solving python slab ...') 
-            slab_py = ra.solvers.Slab2( 
-                Ledges, Tslab, nH, nHe, hm12, rec_meth='thresh', 
-                find_Teq=True, z=3.0, tol=1.0e-8 )
-
-        make_x_plot( slab_fc, 'slab_2_poly_thresh_pcte_x.png' )
-        make_t_plot( slab_fc, 'slab_2_poly_thresh_pcte_t.png' )
-        if i_solve_python:
-            self.check_slabs( slab_fc, slab_py )         
-
-
-
-
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestSlab2PythonFortran)
 
