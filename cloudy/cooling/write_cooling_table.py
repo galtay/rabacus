@@ -5,7 +5,10 @@ import rabacus as ra
 
 
 z = 3.0
-cloudy_exe = os.environ['CLOUDY_EXE']
+cloudy_exe = os.environ.get(
+    'CLOUDY_EXE',
+    os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                 '..', 'build', 'c13.05', 'source', 'cloudy.exe'))
 
 
 
